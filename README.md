@@ -1,5 +1,5 @@
 # Bike4Share
-This repository contains the project of the course *Software Enginnering for GeoInformatics* teached by Professor Di Nitto in the academic year 2018/2019.
+This amazing repository contains the project of the course *Software Enginnering for GeoInformatics* teached by Professor Di Nitto in the academic year 2018/2019.
 
 The project, including documentation, is in English.
 
