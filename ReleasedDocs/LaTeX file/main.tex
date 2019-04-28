@@ -30,7 +30,7 @@ In the third chapter, ”3 Specific Requirements ”, is presented a full list o
 
 \section{Overall Description}
 \subsection{Product perspective}
-Our web application “bike4share” will work thanks to several components supporting it. As shown in the scheme in \ref{fig:schema}, we can recognise three levels of the system: Data, Software and User. 
+Our web application “bike4share” will work thanks to several components supporting it. As shown in the scheme in Figure \ref{fig:schema}, we can recognise three levels of the system: Data, Software and User. 
 Starting from the bottom and considering the inputs, Data are retrieved from two Databases, one for the registered users and technicians and one for the information regarding the bike stations. Databases are managed with PostgresSQL.
 The outputs of “bike4share”, instead, are the visualisation of a map showing the bike stations with the relative information (bikes and free stalls) and the visualisation of statistics (only for technicians and premium users). Using Python we can perform the outputs using the available libraries. In order to build the map, libraries as Shapely, Padas and Geopandas are very useful to manage a background map with the entities we want to represent. For what concerning the statistics, instead, we use libraries as Numpy, Seaborn and Bokeh for the visualisation of them. The third level is the one regarding the user, capable of viewing the map to obtain the information, and the technician, who can perform API request to analyse data and statistics. Both the actors can perform their purposes accessing the page through the browser. 
 
@@ -42,7 +42,7 @@ The outputs of “bike4share”, instead, are the visualisation of a map showing
 \end{figure}
 
 \subsection{Product functions}
-bike4share” provides different functions to different type of users. 
+"bike4share” provides different functions to different type of users. 
 The basic function provided to all the users is a web page with a map with the position of all the bike stalls and the realtime number of bikes present in each stall and the number of free ones.
 If the user logs into the system, after the registration, can access to extra functionalities that can help the usability of the app by the user. Premium functions are the displaying of the position of the user on the map, to help the user to see the nearest station, and also a list of the stations will appear near the maps, if the users doesn’t allow to access to the position or this feature is not available for the user system, the user can insert the address or select the position on the map. Another function that a user can use is for estimating the mean number of bikes available and free stalls in a certain hours selected by the users. 
 There is also a specific section of the application “bike4share” devoted to the technician’s use. The technician is requested to complete the registration and log-in to have access to the specific section, in which analysis instruments and graphical statistic tools are provided. 
