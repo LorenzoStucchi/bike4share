@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Check{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="secret_code">secret_code</label>
+    <input type="secret_code" name="secret_code" id="secret_code" required>
+    <input type="submit" value="Check it!">
+  </form>
+{% endblock %}
