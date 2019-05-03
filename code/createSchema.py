@@ -5,54 +5,75 @@ Created on Sun Mar 24 23:54:08 2019
 
 @author: elisabettadinitto
 """
+import random
 
 from psycopg2 import (
         connect
 )
 
 cleanup = (
-        'DROP TABLE IF EXISTS blog_user CASCADE',
-        'DROP TABLE IF EXISTS post'
+        'DROP TABLE IF EXISTS user_bike CASCADE',
+        'DROP TABLE IF EXISTS key_list CASCADE'
         )
 
 commands = (
         """
-        CREATE TABLE blog_user (
+        CREATE TABLE key_list (
+            id_key SERIAL PRIMARY KEY,
+            secret_key VARCHAR(35) UNIQUE NOT NULL
+        )
+        """,
+
+        """
+        CREATE TABLE user_bike (
             user_id SERIAL PRIMARY KEY,
             user_name VARCHAR(255) UNIQUE NOT NULL,
             user_password VARCHAR(255) NOT NULL,
             user_type VARCHAR(255)
         )
-        """,
-        """ 
-        CREATE TABLE post (
-                post_id SERIAL PRIMARY KEY,
-                author_id INTEGER NOT NULL,
-                created TIMESTAMP DEFAULT NOW(),
-                title VARCHAR(350) NOT NULL,
-                body VARCHAR(500) NOT NULL,
-                FOREIGN KEY (author_id)
-                    REFERENCES blog_user (user_id)
-        )
+        
         """)
 
 sqlCommands = (
-        'INSERT INTO blog_user (user_name, user_password) VALUES (%s, %s) RETURNING user_id',
-        'INSERT INTO post (title, body, author_id) VALUES (%s, %s, %s)'
+        'INSERT INTO user_bike (user_name, user_password) VALUES (%s, %s) RETURNING user_id',
+        'INSERT INTO key_list (secret_key) VALUES (%s)'
         )        
-conn = connect("dbname=lorenzogiulianopapale user=lorenzogiulianopapale password=lorenzogiulianopapale")
+#KEY GENERATOR
+def key_generator():
+    tipo = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    lunghezza = 34
+    psw = ""
+    x = 0
+    for x in range(int(lunghezza)):
+        psw += tipo[int(random.randrange(len(tipo)))]
+        x += 1
+    return psw
+        
+        
+conn = connect("dbname=bike4share user=postgres password=postgres")
 cur = conn.cursor()
+
 for command in cleanup :
     cur.execute(command)
 for command in commands :
     cur.execute(command)
     print('execute command')
-cur.execute(sqlCommands[0], ('Giuseppe', '3ety3e7'))
-userId = cur.fetchone()[0]
-cur.execute(sqlCommands[1], ('My First Post', 'This is the post body', userId))
-cur.execute('SELECT * FROM post')
-print(cur.fetchall())
-
+a = key_generator()
+cur.execute(sqlCommands[0], (a, a))
+#userId = cur.fetchone()[0]
+#for i in range (20):
+#   a = key_generator()
+    #cur.execute(sqlCommands[1], ('pippo'))
+#    pippo='pippo'
+cur.execute('INSERT INTO key_list (secret_key) VALUES (%s)', a)
+    
+#    
+#    
+#
+#print(cur.fetchall())
+cur.execute('SELECT * FROM user_bike')
 cur.close()
 conn.commit()
 conn.close()
+
+

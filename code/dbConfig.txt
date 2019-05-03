@@ -1,1 +1,1 @@
-dbname=lorenzogiulianopapale user=lorenzogiulianopapale password=lorenzogiulianopapale
+dbname=sara user=postgres password=postgres
