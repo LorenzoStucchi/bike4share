@@ -1,9 +1,8 @@
 import random
+import pandas as pd
+from psycopg2 import connect
 
-from psycopg2 import (
-        connect
-)
-
+#SQL Command
 cleanup = (
         'DROP TABLE IF EXISTS user_bike CASCADE',
         'DROP TABLE IF EXISTS key_list CASCADE'
@@ -25,15 +24,11 @@ commands = (
             user_type VARCHAR(255)
         )
         
-        """)
-
-sqlCommands = (
-        'INSERT INTO user_bike (user_name, user_password) VALUES (%s, %s) RETURNING user_id',
-        'INSERT INTO key_list (secret_key) VALUES (%s)'
-        )        
+        """)   
+   
 #KEY GENERATOR
 def key_generator():
-    tipo = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    tipo = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!£$%&/()=?^"
     lunghezza = 34
     psw = ""
     x = 0
@@ -42,7 +37,7 @@ def key_generator():
         x += 1
     return psw
         
-        
+# Main    
 conn = connect("dbname=bike4share user=postgres password=postgres")
 cur = conn.cursor()
 
@@ -50,21 +45,17 @@ for command in cleanup :
     cur.execute(command)
 for command in commands :
     cur.execute(command)
-    print('execute command')
-a = key_generator()
-cur.execute(sqlCommands[0], (a, a))
-#userId = cur.fetchone()[0]
-#for i in range (20):
-#   a = key_generator()
-    #cur.execute(sqlCommands[1], ('pippo'))
-#    pippo='pippo'
-cur.execute('INSERT INTO key_list (secret_key) VALUES (%s)', a)
-    
-#    
-#    
-#
-#print(cur.fetchall())
-cur.execute('SELECT * FROM user_bike')
+print('created tables')
+s =[[]]
+s_k = pd.DataFrame({"key"})
+for i in range (20):
+    secr_key = key_generator()
+    cur.execute('INSERT INTO key_list (secret_key) VALUES (%s)', (secr_key,))
+    s_k.loc[i] = [secr_key]    
+print('created secret key')
+
+s_k.to_csv('secret_key.txt', header=None, index=None, sep='\n')
+
 cur.close()
 conn.commit()
 conn.close()
