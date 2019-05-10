@@ -1,1 +1,0 @@
-dbname=sara user=postgres password=postgres

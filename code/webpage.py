@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on 
-
-@author: 
-"""
-
 from flask import (
     Flask, render_template, request, redirect, flash, url_for, session, g
 )
