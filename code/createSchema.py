@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Mar 24 23:54:08 2019
-
-@author: elisabettadinitto
-"""
 import random
 
 from psycopg2 import (
