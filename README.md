@@ -11,5 +11,5 @@ The project, including documentation, is in English.
 | Lorenzo Stucchi   | 899072 | lorenzo.stucchi@mail.polimi.it |
 | Federica Vaghi | 905531 | federica.vaghi@mail.polimi.it | 
 
-##First Instriction##
-To start the execution of the code is needed to have installed on the computer postgres, and create a database called bike4share.
+### First Instriction ###
+To start the execution of the code is needed to have installed on the computer PostgreSQL, and create a database called bike4share.
