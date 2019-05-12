@@ -2,14 +2,13 @@ from flask import (
     Flask, render_template, request, redirect, flash, url_for, session, g
 )
 
-from werkzeug.security import check_password_hash, generate_password_hash
-
-from werkzeug.exceptions import abort
+from werkzeug.security import (
+        check_password_hash, generate_password_hash , abort
+)
 
 from psycopg2 import (
         connect
 )
-
 
 # Create the application instance
 app = Flask(__name__, template_folder="templates")
