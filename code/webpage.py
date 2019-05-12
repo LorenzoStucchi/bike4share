@@ -129,114 +129,62 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-# --------------------------- fix till here ---------------------------------
-    
 #TECH REGISTRATION
-@app.route('/check', methods=('GET', 'POST'))
-def check():
+@app.route('/tec_reg', methods=('GET', 'POST'))
+def tec_reg():
     
     if request.method =='POST':
         secret_code = request.form['secret_code']
-        secret_key = 'abc'
-        error = None
-        if secret_code == secret_key:
-            return render_template('auth/register.html')
-        else:
-            error = 'Incorrect secret key, Please contact the administrator to obtain it.'
-            flash(error)
-    return render_template('auth/check.html')
-
-# =============================================================================
-# 
-# @app.route('/create', methods=('GET', 'POST'))
-# def create():
-#     if load_logged_in_user():
-#         if request.method == 'POST' :
-#             title = request.form['title']
-#             body = request.form['body']
-#             error = None
-#             
-#             if not title :
-#                 error = 'Title is required!'
-#             if error is not None :
-#                 flash(error)
-#                 return redirect(url_for('index'))
-#             else : 
-#                 conn = get_dbConn()
-#                 cur = conn.cursor()
-#                 cur.execute('INSERT INTO post (title, body, author_id) VALUES (%s, %s, %s)', 
-#                             (title, body, g.user[0])
-#                             )
-#                 cur.close()
-#                 conn.commit()
-#                 return redirect(url_for('index'))
-#         else :
-#             return render_template('blog/create.html')
-#     else :
-#         error = 'Only loggedin users can insert posts!'
-#         flash(error)
-#         return redirect(url_for('login'))
-#    
-# def get_post(id):
-#     conn = get_dbConn()
-#     cur = conn.cursor()
-#     cur.execute(
-#         """SELECT *
-#            FROM post
-#            WHERE post.post_id = %s""",
-#         (id,)
-#     )
-#     post = cur.fetchone()
-#     cur.close()
-#     if post is None:
-#         abort(404, "Post id {0} doesn't exist.".format(id))
-# 
-#     if post[1] != g.user[0]:
-#         abort(403)
-# 
-#     return post
-# 
-#
-#@app.route('/<int:id>/update', methods=('GET', 'POST'))
-#def update(id):
-#    if load_logged_in_user():
-#        post = get_post(id)
-#        if request.method == 'POST' :
-#            title = request.form['title']
-#            body = request.form['body']
-#            error = None
-#            
-#            if not title :
-#                error = 'Title is required!'
-#            if error is not None :
-#                flash(error)
-#                return redirect(url_for('index'))
-#            else : 
-#                conn = get_dbConn()
-#                cur = conn.cursor()
-#                cur.execute('UPDATE post SET title = %s, body = %s'
-#                               'WHERE post_id = %s', 
-#                               (title, body, id)
-#                               )
-#                cur.close()
-#                conn.commit()
-#                return redirect(url_for('index'))
-#        else :
-#            return render_template('blog/update.html', post=post)
-#    else :
-#        error = 'Only loggedin users can insert posts!'
-#        flash(error)
-#        return redirect(url_for('login'))
-#
-#@app.route('/<int:id>/delete', methods=('POST',))
-#def delete(id):
-#    conn = get_dbConn()                
-#    cur = conn.cursor()
-#    cur.execute('DELETE FROM post WHERE post_id = %s', (id,))
-#    conn.commit()
-#    return redirect(url_for('index'))                               
-# =============================================================================
+        username = request.form['username']
+        password = request.form['password']
         
+        conn = get_dbConn()
+        cur = conn.cursor()
+        error = None
+        cur.execute(
+            'SELECT * FROM key_list WHERE secret_key = %s', (secret_code,)
+        )
+        s_k = cur.fetchone()
+        cur.close()
+        conn.commit()
+        
+        if s_k is None:
+            error = ' Incorrect secret key, Please contact the administrator to obtain it.'
+            flash(error)
+        else:
+            if not username:
+                error = 'Username is required.'
+            elif not password:
+                error = 'Password is required.'
+            else :
+                conn = get_dbConn()
+                cur = conn.cursor()
+                cur.execute(
+                'SELECT user_id FROM user_bike WHERE user_name = %s', (username,))
+                if cur.fetchone() is not None:
+                    error = 'User {} is already registered.'.format(username)
+                    cur.close()
+                    
+            flash(error)
+            
+            if error is None:
+                conn = get_dbConn()
+                cur = conn.cursor()
+                user_type = 't'
+                cur.execute(
+                    'INSERT INTO user_bike (user_name, user_password, user_type) VALUES (%s, %s, %s)',
+                    (username, generate_password_hash(password), user_type)
+                )
+                cur.execute(
+                    'DELETE FROM key_list WHERE secret_key = %s',(secret_code,)
+                )
+                
+                cur.close()
+                conn.commit()
+                return redirect(url_for('login'))
+            
+    return render_template('auth/tec_reg.html')
+   
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
     app.run(debug=True)
