@@ -38,7 +38,9 @@ def key_generator():
     return psw
         
 # Main    
-conn = connect("dbname=bike4share user=postgres password=postgres")
+myFile = open('dbConfig.txt')
+connStr = myFile.readline()
+conn = connect(connStr)
 cur = conn.cursor()
 
 for command in cleanup :
