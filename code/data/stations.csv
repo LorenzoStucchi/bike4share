@@ -1,0 +1,62 @@
+ID,BIKE_SH,INDIRIZZO,STALLI,LOCALIZ,Latitude,Longitude
+"1",001 Duomo 1,P.za Duomo,"24",Carreggiata,45.4647236900,9.1890297970
+"2",002 San Babila,P.za S.Babila,"24",Marciapiede,45.4664728700,9.1975833790
+"3",003 Cadorna 1,P.za Cadorna,"21",Marciapiede,45.4680029000,9.1756616400
+"4",004 Lanza,L.go Greppi,"24",Marciapiede,45.4722740000,9.1819701200
+"5",005 Universit� Cattolica,P.za S.Ambrogio,"24",Marciapiede,45.4630417300,9.1764978940
+"6",006 San Giorgio,P.za S.Giorgio,"24",Marciapiede,45.4608894500,9.1836209400
+"7",007 Santa Maria Beltrade,P.za S.Maria Beltrade,"24",Marciapiede,45.4627857700,9.1867691650
+"8",008 Velasca,P.za Velasca,"24",Marciapiede,45.4600532500,9.1902146040
+"9",009 Santo Stefano,P.za S.Stefano,"18",Marciapiede,45.4623649700,9.1953264000
+"10",010 Missori,P.za Missori,"21",Marciapiede,45.4612950800,9.1881519880
+"11","011 Castello ""Acquario civico""",Via Gadio,"18",Marciapiede,45.4724531500,9.1794244460
+"12","012 San Lorenzo ""Colonne""",Via Pio IV,"24",Marciapiede,45.4586021400,9.1814794480
+"13",013 Senato,Via Senato,"18",Marciapiede,45.4705467100,9.1974533800
+"14","014 San Barnaba ""H Mangiagalli""",Via S. Barnaba,"21",Marciapiede,45.4595160000,9.1985209170
+"15",015 Cantore,P.za Cantore,"24",Marciapiede,45.4558008700,9.1728116040
+"16",016 Moscova,L.go La Foppa,"24",Marciapiede,45.4775300600,9.1846031170
+"17","017 Legnano ""Arena civica""",Via Legnano,"18",Marciapiede,45.4772037700,9.1808631760
+"18",018 Tommaseo,P.za Tommaseo,"24",Marciapiede,45.4695051300,9.1665408510
+"19",019 Santa Sofia,Via S.Sofia,"24",Marciapiede,45.4563332900,9.1881606160
+"20",020 Erculea,P.za Erculea,"21",Marciapiede,45.4590841100,9.1896070020
+"21",021 Universit� Bocconi 1,Via Bocconi,"24",Marciapiede,45.4485779700,9.1904413080
+"22",022 Medaglie d'Oro 1,C.so Lodi,"21",Marciapiede,45.4512103800,9.2040892360
+"23",023 Regina Margherita,V.le Regina Margherita,"24",Marciapiede,45.4582486800,9.2052599810
+"24",024 Tricolore,C.so Concordia,"24",Marciapiede,45.4679649400,9.2073250820
+"25",025 Centrale 1,P.za Duca d'Aosta sx,"24",Marciapiede,45.4854214100,9.2024826340
+"26",026 Centrale 2,P.za Duca d'Aosta dx,"24",Marciapiede,45.4845393000,9.2042442760
+"27",027 P.ta Venezia - Oberdan,Bastioni di P.ta Venezia,"24",Marciapiede,45.4746733700,9.2045493520
+"28",028 San Giovanni sul Muro,L.go Callas,"24",Marciapiede,45.4674657800,9.1814461260
+"29","029 San Pietro in Gessate ""Tribunale""",C.so P.ta Vittoria,"24",Marciapiede,45.4623952300,9.2013911230
+"30",030 Crocetta,L.go Crocetta,"21",Marciapiede,45.4562440200,9.1956671560
+"32",032 Manin - Bastioni,Via Manin,"30",Carreggiata,45.4768598700,9.1983157310
+"33","033 Alemagna ""Triennale""",Via Alemagna,"24",Carreggiata,45.4718778900,9.1734772520
+"34",034 Cairoli,L.go Cairoli,"21",Marciapiede,45.4679968300,9.1823021710
+"35",035 Torino - Carrobbio,Via Torino,"21",Marciapiede,45.4604342300,9.1817240010
+"36",036 San Vito,Via S.Vito,"24",Marciapiede,45.4592019100,9.1837075490
+"37",037 Italia - San Martino,C.so Italia,"24",Marciapiede,45.4529680100,9.1869537450
+"38",038 XXIV Maggio,P.le XXIV Maggio,"24",Marciapiede,45.4521532500,9.1791598170
+"39",039 XXV Aprile,C.so Garibaldi,"24",Marciapiede,45.4802273200,9.1866927850
+"40",040 Morozzo della Rocca,Via Morozzo della Rocca,"24",Carreggiata,45.4639730100,9.1689138230
+"41",041 Conciliazione,P.za Conciliazione,"18",Marciapiede,45.4676875600,9.1669412120
+"42",042 San Pietro all'Orto,Via S.Pietro all'Orto,"24",Carreggiata,45.4660830900,9.1956029280
+"43",043 Festa del Perdono,Via Festa del Perdono,"24",Marciapiede,45.4613062500,9.1947056150
+"44","044 Richini ""Univ. Statale""",L.go Richini,"24",Marciapiede,45.4593591700,9.1929250000
+"45",045 Cant�,Via Cant�,"21",Marciapiede,45.4641901900,9.1866259100
+"46",046 Porta Nuova,P.le Principessa Clotilde,"24",Marciapiede,45.4800018800,9.1928218560
+"47","047 Gorizia 1 ""Navigli""",V.le Gorizia,"24",Marciapiede,45.4523251100,9.1774438140
+"48","048 Gorizia 2 ""Navigli""",V.le Gorizia,"21",Marciapiede,45.4523403600,9.1772987510
+"49",049 San Paolo - P.za Meda,Via S.Paolo,"24",Carreggiata,45.4664465600,9.1930161160
+"50",050 Beccaria,P.za Beccaria,"24",Carreggiata,45.4643714500,9.1948269030
+"51",051 Santa Maria delle Grazie,Via F.lli Ruffini,"24",Carreggiata,45.4665062400,9.1697866660
+"52",052 Vittor Pisani,Via Vittor Pisani,"24",Marciapiede,45.4804317700,9.1991370860
+"53",053 Palestro 1,Via Palestro,"24",Carreggiata,45.4723385500,9.2017079380
+"54",054 Sant'Eustorgio - P.ta Ticinese,C.so P.ta Ticinese,"24",Carreggiata,45.4551668400,9.1806937130
+"55",055 Cinque Giornate,P.za Cinque Giornate,"24",Carreggiata,45.4626535700,9.2070565070
+"56",056 Bastioni di P.ta Venezia,V.le Citt� di Fiume,"24",Carreggiata,45.4759100700,9.2005867190
+"57",057 Brera,Via Brera,"24",Carreggiata,45.4717898300,9.1875417420
+"58",058 Sant'Agostino,Via Numa Pompilio,"24",Carreggiata,45.4589188100,9.1695199840
+"59",059 Palestro 2,Via Palestro,"24",Carreggiata,45.4724362000,9.2015016190
+"60",060 Edison,Via della Posta,"24",Carreggiata,45.4643306200,9.1835441200
+"61",061 Augusto,L.go Augusto,"24",Carreggiata,45.4634291500,9.1981603880
+"62",062 Treves,L.go Treves,"24",Carreggiata,45.4750450000,9.1867878510

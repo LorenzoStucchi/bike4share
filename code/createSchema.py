@@ -58,7 +58,6 @@ for command in commands :
     cur.execute(command)
 print('created tables')
 # Fill the secret_key table
-s =[[]]
 s_k = pd.DataFrame({"key"})
 for i in range (20):
     secr_key = key_generator()
@@ -70,11 +69,21 @@ s_k.to_csv('secret_key.txt', header=None, index=None, sep='\n')
 # Create engine for import dataframe
 db_url = 'postgresql://'+username+':'+password+'@localhost:5432/'+dbname
 engine = create_engine(db_url)
-# Import dataframe
+# Import dataframe of bike and stalls
 df = pd.read_csv('./data/bike.csv')
-# Insert into database
 df.to_sql('bike_stalls', engine, if_exists='replace', index=False)
-print('Added dataframe')
+print('Added dataframe of bike and stalls')
+# Import geodataframe of the stations (shapefile)
+#gdf = gpd.read_file('./data/stations.shp')
+#gdf['geom'] = gdf['geometry'].apply(lambda x: WKTElement(x.wkt, srid=4326))
+#gdf.drop('geometry', 1, inplace=True)
+#gdf.to_sql('stations', engine, if_exists='replace', index=True, 
+#            dtype={('geom'): Geometry('POINT', srid= 4326)})
+
+# Import geodataframe of the stations (csv)
+gdf = pd.read_csv('./data/stations.csv')
+gdf.to_sql('stations', engine, if_exists='replace', index=False)
+print('Added dataframe of stations')
 # Close connection 
 cur.close()
 conn.commit()
