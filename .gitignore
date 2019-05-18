@@ -134,3 +134,6 @@ $RECYCLE.BIN/
 
 # Spyder project
 .spyproject/
+
+# Secret key
+./secret_key.txt

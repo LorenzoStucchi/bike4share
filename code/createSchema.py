@@ -1,6 +1,9 @@
 import random
 import pandas as pd
+import geopandas as gpd
 from psycopg2 import connect
+from sqlalchemy import create_engine
+from geoalchemy2 import Geometry, WKTElement
 
 #SQL Command
 cleanup = (
@@ -37,27 +40,42 @@ def key_generator():
         x += 1
     return psw
         
-# Main    
+# Main   
+# Access to database
 myFile = open('dbConfig.txt')
 connStr = myFile.readline()
+data_conn = connStr.split(" ",2)
+dbname = data_conn[0].split("=",1)[1]
+username = data_conn[1].split("=",1)[1]
+password = data_conn[2].split("=",1)[1]
 conn = connect(connStr)
 cur = conn.cursor()
-
+# Delete previous tables
 for command in cleanup :
     cur.execute(command)
+# Create new tables
 for command in commands :
     cur.execute(command)
 print('created tables')
+# Fill the secret_key table
 s =[[]]
 s_k = pd.DataFrame({"key"})
 for i in range (20):
     secr_key = key_generator()
     cur.execute('INSERT INTO key_list (secret_key) VALUES (%s)', (secr_key,))
     s_k.loc[i] = [secr_key]    
-print('created secret key')
-
+print('Added secret key')
+# Save secret key into a txt file
 s_k.to_csv('secret_key.txt', header=None, index=None, sep='\n')
-
+# Create engine for import dataframe
+db_url = 'postgresql://'+username+':'+password+'@localhost:5432/'+dbname
+engine = create_engine(db_url)
+# Import dataframe
+df = pd.read_csv('./data/bike.csv')
+# Insert into database
+df.to_sql('bike_stalls', engine, if_exists='replace', index=False)
+print('Added dataframe')
+# Close connection 
 cur.close()
 conn.commit()
 conn.close()
