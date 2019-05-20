@@ -136,4 +136,4 @@ $RECYCLE.BIN/
 .spyproject/
 
 # Secret key
-./secret_key.txt
+code/secret_key.txt
