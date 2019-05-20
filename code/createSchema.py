@@ -36,7 +36,7 @@ def key_generator():
     psw = ""
     x = 0
     for x in range(int(leng)):
-        psw += tipo[int(random.randrange(len(arr)))]
+        psw += arr[int(random.randrange(len(arr)))]
         x += 1
     return psw
         
