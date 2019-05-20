@@ -31,12 +31,12 @@ commands = (
    
 #KEY GENERATOR
 def key_generator():
-    tipo = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!£$%&/()=?^"
-    lunghezza = 34
+    arr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!£$%&/()=?^"
+    leng = 34
     psw = ""
     x = 0
-    for x in range(int(lunghezza)):
-        psw += tipo[int(random.randrange(len(tipo)))]
+    for x in range(int(leng)):
+        psw += tipo[int(random.randrange(len(arr)))]
         x += 1
     return psw
         
