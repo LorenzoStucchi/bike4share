@@ -20,7 +20,7 @@ import numpy as np
 
 
 # Access to database
-myFile = open('C:/Users/sara maffioli/Documents/GitHub/bike4share/code/dbConfig.txt')
+myFile = open('dbConfig.txt')
 connStr = myFile.readline()
 data_conn = connStr.split(" ",2)
 dbname = data_conn[0].split("=",1)[1]
