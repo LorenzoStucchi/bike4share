@@ -138,3 +138,6 @@ $RECYCLE.BIN/
 
 # Secret key
 code/secret_key.txt
+
+# Python cache
+code/__pycache__/
