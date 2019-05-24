@@ -214,7 +214,7 @@ data_5 = ColumnDataSource({ 'x': months, 'y':  list(bike_months_tot['1'])})
 TOOLTIPS = [
     ("No.bikes", "@y")
 ]
-p5 = figure(title="Stations median bikes availability per month", tooltips=TOOLTIPS)
+p5 = figure(title="Total bikes availability per month", tooltips=TOOLTIPS)
 p5.vbar(x='x', top='y', source = data_5, width=0.9, line_color='white',color='#DA1414')
 
 label_dict_m = {0:'Jan',1:'Jan',2:'Feb',3:'Mar', 4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
