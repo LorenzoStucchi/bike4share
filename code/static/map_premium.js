@@ -1,4 +1,4 @@
-var mymap = L.map('map').setView([45.47, 9.19], 13);
+var mymap = L.map('map_premium').setView([45.47, 9.19], 13);
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
@@ -19,3 +19,23 @@ function onEachFeature(feature, layer) {
 L.geoJSON(bike_stalls,{
     onEachFeature: onEachFeature
 }).addTo(mymap);
+
+mymap.locate({setView: true, maxZoom: 16});
+
+function onLocationFound(e) {
+    var rad = e.accuracy / 2;
+    L.circle(e.latlng,{
+    color: 'blue',
+    fillColor:'blue',
+    radius: 1
+    }).addTo(mymap);
+    L.circle(e.latlng, rad).addTo(mymap);
+}
+
+mymap.on('locationfound', onLocationFound);
+
+function onLocationError(e) {
+    alert(e.message);
+}
+
+mymap.on('locationerror', onLocationError);
