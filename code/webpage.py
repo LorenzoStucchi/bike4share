@@ -3,6 +3,9 @@ from flask import (
 )
 # from werkzeug.exceptions import abort
 from werkzeug.security import check_password_hash, generate_password_hash
+from bokeh.embed import server_document, server_session
+from bokeh.client import pull_session
+import subprocess
 
 from psycopg2 import connect
 
@@ -186,6 +189,17 @@ def tec_reg():
                 return redirect(url_for('login'))
             
     return render_template('auth/tec_reg.html')
+
+
+def bash_command(cmd):
+    subprocess.Popen(cmd, shell=True)
+bash_command('bokeh serve statistics.py --allow-websocket-origin=127.0.0.1:5000')
+
+@app.route('/statistics')
+def statistics():
+   session = pull_session(url="http://localhost:5006/statistics")
+   bokeh_script=server_session(model=None, url="http://localhost:5006/statistics",session_id=session.id)
+   return render_template("stat_bikes.html",bokeh_script=bokeh_script)
    
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
