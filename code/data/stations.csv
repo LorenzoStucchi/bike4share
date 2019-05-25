@@ -3,7 +3,7 @@ ID,BIKE_SH,INDIRIZZO,STALLI,LOCALIZ,Latitude,Longitude
 "2",002 San Babila,P.za S.Babila,"24",Marciapiede,45.4664728700,9.1975833790
 "3",003 Cadorna 1,P.za Cadorna,"21",Marciapiede,45.4680029000,9.1756616400
 "4",004 Lanza,L.go Greppi,"24",Marciapiede,45.4722740000,9.1819701200
-"5",005 Universit� Cattolica,P.za S.Ambrogio,"24",Marciapiede,45.4630417300,9.1764978940
+"5",005 Universita' Cattolica,P.za S.Ambrogio,"24",Marciapiede,45.4630417300,9.1764978940
 "6",006 San Giorgio,P.za S.Giorgio,"24",Marciapiede,45.4608894500,9.1836209400
 "7",007 Santa Maria Beltrade,P.za S.Maria Beltrade,"24",Marciapiede,45.4627857700,9.1867691650
 "8",008 Velasca,P.za Velasca,"24",Marciapiede,45.4600532500,9.1902146040
@@ -19,7 +19,7 @@ ID,BIKE_SH,INDIRIZZO,STALLI,LOCALIZ,Latitude,Longitude
 "18",018 Tommaseo,P.za Tommaseo,"24",Marciapiede,45.4695051300,9.1665408510
 "19",019 Santa Sofia,Via S.Sofia,"24",Marciapiede,45.4563332900,9.1881606160
 "20",020 Erculea,P.za Erculea,"21",Marciapiede,45.4590841100,9.1896070020
-"21",021 Universit� Bocconi 1,Via Bocconi,"24",Marciapiede,45.4485779700,9.1904413080
+"21",021 Universita' Bocconi 1,Via Bocconi,"24",Marciapiede,45.4485779700,9.1904413080
 "22",022 Medaglie d'Oro 1,C.so Lodi,"21",Marciapiede,45.4512103800,9.2040892360
 "23",023 Regina Margherita,V.le Regina Margherita,"24",Marciapiede,45.4582486800,9.2052599810
 "24",024 Tricolore,C.so Concordia,"24",Marciapiede,45.4679649400,9.2073250820
@@ -42,7 +42,7 @@ ID,BIKE_SH,INDIRIZZO,STALLI,LOCALIZ,Latitude,Longitude
 "42",042 San Pietro all'Orto,Via S.Pietro all'Orto,"24",Carreggiata,45.4660830900,9.1956029280
 "43",043 Festa del Perdono,Via Festa del Perdono,"24",Marciapiede,45.4613062500,9.1947056150
 "44","044 Richini ""Univ. Statale""",L.go Richini,"24",Marciapiede,45.4593591700,9.1929250000
-"45",045 Cant�,Via Cant�,"21",Marciapiede,45.4641901900,9.1866259100
+"45",045 Cantu',Via Cantu',"21",Marciapiede,45.4641901900,9.1866259100
 "46",046 Porta Nuova,P.le Principessa Clotilde,"24",Marciapiede,45.4800018800,9.1928218560
 "47","047 Gorizia 1 ""Navigli""",V.le Gorizia,"24",Marciapiede,45.4523251100,9.1774438140
 "48","048 Gorizia 2 ""Navigli""",V.le Gorizia,"21",Marciapiede,45.4523403600,9.1772987510
@@ -53,7 +53,7 @@ ID,BIKE_SH,INDIRIZZO,STALLI,LOCALIZ,Latitude,Longitude
 "53",053 Palestro 1,Via Palestro,"24",Carreggiata,45.4723385500,9.2017079380
 "54",054 Sant'Eustorgio - P.ta Ticinese,C.so P.ta Ticinese,"24",Carreggiata,45.4551668400,9.1806937130
 "55",055 Cinque Giornate,P.za Cinque Giornate,"24",Carreggiata,45.4626535700,9.2070565070
-"56",056 Bastioni di P.ta Venezia,V.le Citt� di Fiume,"24",Carreggiata,45.4759100700,9.2005867190
+"56",056 Bastioni di P.ta Venezia,V.le Citta' di Fiume,"24",Carreggiata,45.4759100700,9.2005867190
 "57",057 Brera,Via Brera,"24",Carreggiata,45.4717898300,9.1875417420
 "58",058 Sant'Agostino,Via Numa Pompilio,"24",Carreggiata,45.4589188100,9.1695199840
 "59",059 Palestro 2,Via Palestro,"24",Carreggiata,45.4724362000,9.2015016190
