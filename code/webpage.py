@@ -1,7 +1,7 @@
 from flask import (
     Flask, render_template, request, redirect, flash, url_for, session, g
 )
-from werkzeug.exceptions import abort
+# from werkzeug.exceptions import abort
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from psycopg2 import connect

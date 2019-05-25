@@ -1,9 +1,7 @@
 import random
 import pandas as pd
-import geopandas as gpd
 from psycopg2 import connect
 from sqlalchemy import create_engine
-from geoalchemy2 import Geometry, WKTElement
 
 #SQL Command
 cleanup = (
@@ -73,13 +71,6 @@ engine = create_engine(db_url)
 df = pd.read_csv('./data/bike.csv')
 df.to_sql('bike_stalls', engine, if_exists='replace', index=False)
 print('Added dataframe of bike and stalls')
-# Import geodataframe of the stations (shapefile)
-#gdf = gpd.read_file('./data/stations.shp')
-#gdf['geom'] = gdf['geometry'].apply(lambda x: WKTElement(x.wkt, srid=4326))
-#gdf.drop('geometry', 1, inplace=True)
-#gdf.to_sql('stations', engine, if_exists='replace', index=True, 
-#            dtype={('geom'): Geometry('POINT', srid= 4326)})
-
 # Import geodataframe of the stations (csv)
 gdf = pd.read_csv('./data/stations.csv')
 gdf.to_sql('stations', engine, if_exists='replace', index=False)
