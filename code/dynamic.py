@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    script=server_document("http://localhost:5006/statistics1")
+    script=server_document("http://localhost:5006/statistics")
     print(script)
     return render_template('hello.html',bokS=script)
 
