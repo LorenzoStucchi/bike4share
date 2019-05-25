@@ -261,7 +261,7 @@ g5= gridplot([p5_widget, p5], ncols=2, plot_width=400, plot_height=400)
 layout2 = row(g4,g5) 
 layout=column(layout1,layout2)
 #Output the plot
-output_file("stat_bikes.html")
+output_file("templates/stat_bikes.html")
 show(layout)
 # put the button and plot in a layout and add to the document
 curdoc().add_root(layout)
