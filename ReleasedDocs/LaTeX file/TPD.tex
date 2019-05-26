@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{mathtools}
+
+\title{Test plan document: bike4share}
+\author{Maffioli Sara, Papale Lorenzo, \\ Stucchi Lorenzo \& Vaghi Federica}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\newpage
+
+\section{User Registration}
+\subsection{Introduction}
+The test is done to test the function of the registration form for a normal user of the “bike4share” webapp.
+\subsection{Test Items}
+\begin{itemize}
+    \item Registration form on the page /register
+\end{itemize}
+\subsection{Features to be Tested}
+\begin{itemize}
+    \item The registration is done only if the username and the password are written
+    \item The registration doesn’t works for an already existed username
+\end{itemize}
+\subsection{Features Not to Be Tested}
+\begin{itemize}
+    \item A minimum number of charter for username and password is not required. 
+\end{itemize}
+\subsection{Approach}
+\begin{itemize}
+    \item The test is done manually. And the different combination described into the schedule are done. 
+\end{itemize}
+\subsection{Item Pass/Fail Criteria}
+\begin{itemize}
+    \item The test is passed if only the user with a new username and a password is registered into the database of bike\textunderscore users and the user is registrated with user\textunderscore type equal to u (normal user). 
+\end{itemize}
+\subsection{Schedule}
+\begin{itemize}
+    \item The form is filled without putting a password. Only username “test 1”
+    \item The form is filled without putting a username. Only password “testpa”
+    \item The form is filled with username “test 1” and password “testpa”
+    \item The form is filled with an existing username “ test1” .
+\end{itemize}
+\subsection{Final State}
+\begin{itemize}
+    \item The test is done manually and all the features tested works.
+\end{itemize}
+
+
+\section{Technician Registration}
+\subsection{Introduction}
+The test is done to test the function of the registration form for a techician user of the “bike4share” webapp.
+\subsection{Test Items}
+\begin{itemize}
+    \item Registration form on the page /tec\textunderscore reg
+\end{itemize}
+\subsection{Features to be Tested}
+\begin{itemize}
+    \item The registration is done only if the secret code, the username and the password are written and the secret code is not yet used.
+    \item The registration doesn’t works for an already used secret code or existed username
+\end{itemize}
+\subsection{Features Not to Be Tested}
+\begin{itemize}
+    \item A minimum number of character for username and password is not required. 
+\end{itemize}
+\subsection{Approach}
+\begin{itemize}
+    \item The test is done manually. And the different combination described into the schedule are done. 
+\end{itemize}
+\subsection{Item Pass/Fail Criteria}
+\begin{itemize}
+    \item The test is passed if only the user with an never used secret code, a new username and a password is registered into the database of bike\textunderscore users, the user is registered with user\textunderscore type equal to t (technician user) and the secret code is deleted from the database secret\textunderscore key.
+   \end{itemize}
+\subsection{Schedule}
+\begin{itemize}
+    \item The form is filled without putting a secret code. Only username “tec1” and password “tecpa”.
+    \item The form is filled without putting a password. Only secret code and username “tec1”
+    \item The form is filled without putting a username. Only secret code and password “tecpa”
+    \item The form is filled with secret code, username “tec1” and password “tecpa”.
+    \item The form is filled with an existing username “ test1”.
+    \item The form is filled with an invented secret code.
+    \item The form is filled with an already used secret code.
+\end{itemize}
+\subsection{Final State}
+\begin{itemize}
+    \item The test is done manually and all the features tested works.
+\end{itemize}
+
+\end{document}
