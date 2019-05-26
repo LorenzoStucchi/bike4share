@@ -7,18 +7,15 @@ import pandas as pd
 from sqlalchemy import create_engine
 from psycopg2 import connect
 from bokeh.plotting import figure, show, output_file
-from bokeh.models import ColumnDataSource, Select, FuncTickFormatter
+from bokeh.models import ColumnDataSource, Select, FuncTickFormatter, LabelSet
 from bokeh.io import curdoc
 from bokeh.layouts import row,gridplot,column
 from bokeh.models.widgets import Panel, Tabs
-#from geoalchemy2 import Geometry
-#from bokeh.models.callbacks import CustomJS
-#from bokeh.palettes import Spectral7
-#from bokeh.transform import factor_cmap
-#import numpy as np
+from bokeh.tile_providers import get_provider, Vendors #bokeh version 1.1
+#from bokeh.tile_providers import CARTODBPOSITRON #bokeh version 1.0
 
 # Access to database
-myFile = open('dbConfig.txt')
+myFile = open('C:/Users/sara maffioli/Documents/GitHub/bike4share/code/dbConfig.txt')
 connStr = myFile.readline()
 data_conn = connStr.split(" ",2)
 dbname = data_conn[0].split("=",1)[1]
@@ -52,6 +49,7 @@ bike_days_tot = df_bike.groupby('day', axis=0).sum()
 bike_days_tot=bike_days_tot.drop('month', axis=1)
 bike_months_tot = df_bike.groupby('month', axis=0).sum()
 bike_months_tot=bike_months_tot.drop('day', axis=1)
+bikes_weekend=bike_days_med.drop(bike_days_med.index[[0,1,2,3]])
 
 #Create Select Widget menu options with the list of all the stations
 station_names = list(df_bike)
@@ -72,7 +70,7 @@ TOOLTIPS = [
 ]
 p2 = figure(title="Stations median bikes availability per day of the week", tooltips=TOOLTIPS)
 p2.vbar(x='x', top='y', source = data, width=0.9,  line_color='white')
-
+p2.line('x', 'y', source = data, color = 'blue',line_width=2)
 label_dict = {0:'Mon',1:'Tue',2:'Wen', 3:'Thu',4:'Fri',5:'Sat',6:'Sun'}
 p2.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
@@ -103,6 +101,7 @@ def callback(attr, old, new):
     column2plot = p2_widget.value
     data.data = {'x' : days, 'y': list(bike_days_med[str(column2plot[-1])])}
     p2.vbar(x='x', top='y', source = data, width=0.9, line_color='white')
+    p2.line('x', 'y', source = data, color = 'blue',line_width=2)
     p2.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
     return labels[tick];
@@ -122,7 +121,7 @@ TOOLTIPS = [
 ]
 p3 = figure(title="Stations median bikes availability per month", tooltips=TOOLTIPS)
 p3.vbar(x='x', top='y', source = data_m, width=0.9, line_color='white')
-
+p3.line('x', 'y', source = data_m, color = 'blue',line_width=2)
 label_dict_m = {0:'Jan',1:'Jan',2:'Feb',3:'Mar', 4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
 p3.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
@@ -150,6 +149,7 @@ def callback2(attr, old, new):
     column3plot = p3_widget.value
     data_m.data = {'x' : months, 'y': list(bike_months_med[str(column3plot[-1])])}
     p3.vbar(x='x', top='y', source = data_m, width=0.9, line_color='white')
+    p3.line('x', 'y', source = data_m, color = 'blue',line_width=2)
     p3.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
     return labels[tick];
@@ -167,7 +167,7 @@ TOOLTIPS = [
 ]
 p4 = figure(title="Total bikes availability per day of the week", tooltips=TOOLTIPS)
 p4.vbar(x='x', top='y', source = data_4, width=0.9,  line_color='white',color='#DA1414')
-
+p4.line('x', 'y', source = data_4, color = 'red',line_width=2)
 label_dict = {0:'Mon',1:'Tue',2:'Wen', 3:'Thu',4:'Fri',5:'Sat',6:'Sun'}
 p4.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
@@ -198,6 +198,7 @@ def callback4(attr, old, new):
     column4plot = p4_widget.value
     data_4.data = {'x' : days, 'y': list(bike_days_tot[str(column4plot[-1])])}
     p4.vbar(x='x', top='y', source = data_4, width=0.9, line_color='white',color='#DA1414')
+    p4.line('x', 'y', source = data_4, color = 'red',line_width=2)        
     p4.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
     return labels[tick];
@@ -217,7 +218,7 @@ TOOLTIPS = [
 ]
 p5 = figure(title="Total bikes availability per month", tooltips=TOOLTIPS)
 p5.vbar(x='x', top='y', source = data_5, width=0.9, line_color='white',color='#DA1414')
-
+p5.line('x', 'y', source = data_5, color = 'red',line_width=2)
 label_dict_m = {0:'Jan',1:'Jan',2:'Feb',3:'Mar', 4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
 p5.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
@@ -245,6 +246,7 @@ def callback5(attr, old, new):
     column5plot = p5_widget.value
     data_5.data = {'x' : months, 'y': list(bike_months_tot[str(column5plot[-1])])}
     p5.vbar(x='x', top='y', source = data_5, width=0.9, line_color='white',color='#DA1414')
+    p5.line('x', 'y', source = data_5, color = 'red',line_width=2)        
     p5.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
     return labels[tick];
@@ -252,25 +254,96 @@ def callback5(attr, old, new):
 
 p5_widget.on_change('value', callback5)
 
+#Stations bikes availability during weeknds
+day2= list(bikes_weekend.index)
+data_6 = ColumnDataSource({ 'x': day2, 'y':  list(bikes_weekend['1'])}) 
 
+TOOLTIPS = [
+    ("No.bikes", "@y")
+]
+p6 = figure(title="Bikes availability trend weekend", tooltips=TOOLTIPS)
+p6.line('x', 'y', source = data_6, color = 'orange',line_width=2)
+label_dict_2 = {4:'Friday',5:'Saturday',6:'Sunday'}
+p6.xaxis.formatter = FuncTickFormatter(code="""
+    var labels = %s;
+    return labels[tick];
+""" % label_dict_2)
+
+p6.background_fill_color = "#FDEBD0"
+p6.xaxis.axis_label = "Day"
+p6.xaxis.axis_label_text_color = "#FD6400"
+p6.xaxis.major_label_text_color = "#FD6400"
+p6.yaxis.axis_label = "Number of bikes"
+p6.yaxis.axis_label_text_color = "#FD6400"
+p6.yaxis.major_label_text_color = "#FD6400"
+p6.yaxis.major_label_orientation = "vertical"
+
+p6.title.align = "center"
+p6.title.text_color = "#FD6400"
+p6.title.background_fill_color = "#FEB280"    
+
+p6_widget = Select(options= options_1, value= options_1[0], width=150,
+                title = 'Select a station',background= '#FDEBD0')
+
+#callback needed to upload the graph
+def callback6(attr, old, new):
+    column6plot = p6_widget.value
+    data_6.data = {'x' : day2, 'y': list(bikes_weekend[str(column6plot[-1])])}
+    p6.line('x', 'y', source = data_6, color = 'orange',line_width=2)
+    label_dict_2 = {4:'Friday',5:'Saturday',6:'Sunday'}
+    p6.xaxis.formatter = FuncTickFormatter(code="""
+    var labels = %s;
+    return labels[tick];
+""" % label_dict_2)
+
+p6_widget.on_change('value', callback6)
 
 #Create the plot layout 
-g2= gridplot([p2_widget, p2], ncols=2, plot_width=400, plot_height=400)
-g3= gridplot([p3_widget, p3], ncols=2, plot_width=400, plot_height=400)
-
+g2= gridplot([p2_widget, p2], ncols=2,  plot_height=400,toolbar_location="right")
+g3= gridplot([p3_widget, p3], ncols=2, plot_height=400,toolbar_location="right")
 g2_panel = Panel(child=g2, title='Day median availability')
 g3_panel = Panel(child=g3, title='Month median availability')
-
-# Assign the panels to Tabs
-tabs_1 = Tabs(tabs=[g2_panel,g3_panel])
-#layout1 = row(g2,g3) 
-g4= gridplot([p4_widget, p4], ncols=2, plot_width=400, plot_height=400)
-g5= gridplot([p5_widget, p5], ncols=2, plot_width=400, plot_height=400)
+g4= gridplot([p4_widget, p4], ncols=2, plot_height=400,toolbar_location="right")
+g5= gridplot([p5_widget, p5], ncols=2,  plot_height=400,toolbar_location="right")
 g4_panel = Panel(child=g4, title='Day tot availability')
 g5_panel = Panel(child=g5, title='Month tot availability')
-tabs_2 = Tabs(tabs=[g4_panel,g5_panel])
+g6= gridplot([p6_widget, p6], ncols=2, plot_height=400,toolbar_location="right")
+g6_panel = Panel(child=g6, title='Availability weekend')
+# Assign the panels to Tabs
+
+tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel])
+         
+'''MAP PLOT'''
+
+#Use the dataframe as Bokeh ColumnDataSource
+psource = ColumnDataSource(df_stations)
+
+#Specify feature of the Hoover tool
+TOOLTIPS2 = [
+    ("name", "@BIKE_SH"),
+    ("capacity", "@STALLI")
+]
+
+#Create the Map plot
+# range bounds supplied in web mercator coordinates
+p1 = figure(x_range=(1020414, 1024954), y_range=(5692309, 5698497),
+           x_axis_type="mercator", y_axis_type="mercator", tooltips=TOOLTIPS2)
+
+#Add basemap tile
+p1.add_tile(get_provider(Vendors.CARTODBPOSITRON)) #bokeh version 1.1 
+#p1.add_tile(CARTODBPOSITRON) #bokeh version 1.0
+
+#Add Glyphs
+p1.circle('Latitude', 'Longitude', source=psource, color='red', radius=10)
+
+#Add Labels and add to the plot layout
+# use css as render mode for html 
+labels = LabelSet(x='Latitude', y='Longitude', text='ID', level="glyph",
+              x_offset=5, y_offset=5, source=psource)
+		  
+p1.add_layout(labels)
 #layout2 = row(g4,g5) 
-layout=column(tabs_1,tabs_2)
+layout=row(tab, p1)
 #Output the plot
 output_file("templates/stat_bikes.html")
 show(layout)
