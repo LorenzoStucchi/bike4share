@@ -58,6 +58,7 @@ GitHub.sublime-settings
 
 ### WebStorm ###
 # User-specific stuff:
+.idea
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
@@ -136,4 +137,7 @@ $RECYCLE.BIN/
 .spyproject/
 
 # Secret key
-./secret_key.txt
+code/secret_key.txt
+
+# Python cache
+code/__pycache__/

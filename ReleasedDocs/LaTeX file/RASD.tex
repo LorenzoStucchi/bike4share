@@ -31,8 +31,9 @@ In the third chapter, ”3 Specific Requirements ”, is presented a full list o
 \section{Overall Description}
 \subsection{Product perspective}
 Our web application “bike4share” will work thanks to several components supporting it. As shown in the scheme in Figure \ref{fig:schema}, we can recognise three levels of the system: Data, Software and User. 
-Starting from the bottom and considering the inputs, Data are retrieved from two Databases, one for the registered users and technicians and one for the information regarding the bike stations. Databases are managed with PostgresSQL.
-The outputs of “bike4share”, instead, are the visualisation of a map showing the bike stations with the relative information (bikes and free stalls) and the visualisation of statistics (only for technicians and premium users). Using Python we can perform the outputs using the available libraries. In order to build the map, libraries as Shapely, Padas and Geopandas are very useful to manage a background map with the entities we want to represent. For what concerning the statistics, instead, we use libraries as Numpy, Seaborn and Bokeh for the visualisation of them. The third level is the one regarding the user, capable of viewing the map to obtain the information, and the technician, who can perform API request to analyse data and statistics. Both the actors can perform their purposes accessing the page through the browser. 
+Starting from the bottom and considering the inputs, Data are retrieved from two Databases, one for the registered users and technicians and one for the information regarding the bike stations. 
+The outputs of “bike4share”, instead, are the visualisation of a map showing the bike stations with the relative information (bikes and free stalls) and the visualisation of statistics (only for technicians and premium users). 
+The third level is the one regarding the user, capable of viewing the map to obtain the information, and the technician, who can perform API request to analyse data and statistics. Both the actors can perform their purposes accessing the page through the browser. 
 
 \begin{figure}[h]
     \centering
@@ -217,7 +218,7 @@ The system requires to insert the user name, the e-mail address associated to th
 \end{itemize}
 \item Exceptions
 \begin{itemize}
-    \item localization doesn’t work so logged user can insert the address and find the position
+    \item if the localization doesn’t work the logged user can insert the address and find the position
     \item maps providers crash
     \item server doesn’t work
 \end{itemize}
@@ -341,6 +342,10 @@ If some technician forgets the credentials it is possible to activate the “For
 \subsection{Performance Requirements}
 ---
 \subsection{Design Constraints}
+PostgresSQL is used in order to manage the databases
+Python is used in order to perform the outputs using the available libraries. 
+Libraries as Shapely, Padas and Geopandas are used in order to build the map and to manage a background map with the entities that we want to represent.
+Libraries as Numpy, Seaborn and Bokeh are used for the visualisation of the statistics. 
 ---
 \subsubsection{Standards compliance} 
 ---
