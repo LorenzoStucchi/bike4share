@@ -10,6 +10,7 @@ from bokeh.plotting import figure, show, output_file
 from bokeh.models import ColumnDataSource, Select, FuncTickFormatter
 from bokeh.io import curdoc
 from bokeh.layouts import row,gridplot,column
+from bokeh.models.widgets import Panel, Tabs
 #from geoalchemy2 import Geometry
 #from bokeh.models.callbacks import CustomJS
 #from bokeh.palettes import Spectral7
@@ -252,14 +253,24 @@ def callback5(attr, old, new):
 p5_widget.on_change('value', callback5)
 
 
+
 #Create the plot layout 
 g2= gridplot([p2_widget, p2], ncols=2, plot_width=400, plot_height=400)
 g3= gridplot([p3_widget, p3], ncols=2, plot_width=400, plot_height=400)
-layout1 = row(g2,g3) 
+
+g2_panel = Panel(child=g2, title='Day median availability')
+g3_panel = Panel(child=g3, title='Month median availability')
+
+# Assign the panels to Tabs
+tabs_1 = Tabs(tabs=[g2_panel,g3_panel])
+#layout1 = row(g2,g3) 
 g4= gridplot([p4_widget, p4], ncols=2, plot_width=400, plot_height=400)
 g5= gridplot([p5_widget, p5], ncols=2, plot_width=400, plot_height=400)
-layout2 = row(g4,g5) 
-layout=column(layout1,layout2)
+g4_panel = Panel(child=g4, title='Day tot availability')
+g5_panel = Panel(child=g5, title='Month tot availability')
+tabs_2 = Tabs(tabs=[g4_panel,g5_panel])
+#layout2 = row(g4,g5) 
+layout=column(tabs_1,tabs_2)
 #Output the plot
 output_file("templates/stat_bikes.html")
 show(layout)
