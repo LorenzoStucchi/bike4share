@@ -4,18 +4,20 @@ BAR PLOTS
 """
 #import packages
 import pandas as pd
+import geopandas as gpd
 from sqlalchemy import create_engine
 from psycopg2 import connect
 from bokeh.plotting import figure, show, output_file
-from bokeh.models import ColumnDataSource, Select, FuncTickFormatter, LabelSet
+from bokeh.models import ColumnDataSource, Select, FuncTickFormatter, LabelSet,TapTool
 from bokeh.io import curdoc
 from bokeh.layouts import row,gridplot,column
 from bokeh.models.widgets import Panel, Tabs
 from bokeh.tile_providers import get_provider, Vendors #bokeh version 1.1
 #from bokeh.tile_providers import CARTODBPOSITRON #bokeh version 1.0
 
+
 # Access to database
-myFile = open('C:/Users/sara maffioli/Documents/GitHub/bike4share/code/dbConfig.txt')
+myFile = open('dbConfig.txt')
 connStr = myFile.readline()
 data_conn = connStr.split(" ",2)
 dbname = data_conn[0].split("=",1)[1]
@@ -315,35 +317,53 @@ tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel])
          
 '''MAP PLOT'''
 
-#Use the dataframe as Bokeh ColumnDataSource
-psource = ColumnDataSource(df_stations)
+#Importing data
+stations = gpd.read_file("data/stations.shp").to_crs(epsg=3857)
+#create a function to extract coordinates from the geodataframe 
+def getPointCoords(rows, geom, coord_type):
+    """Calculates coordinates ('x' or 'y') of a Point geometry"""
+    if coord_type == 'x':
+        return rows[geom].x
+    elif coord_type == 'y':
+        return rows[geom].y
+    
+stations['x'] = stations.apply(getPointCoords, geom='geometry', coord_type='x', axis=1)
+stations['y'] = stations.apply(getPointCoords, geom='geometry', coord_type='y', axis=1)
 
-#Specify feature of the Hoover tool
-TOOLTIPS2 = [
+#Save the coordinates as attributes ina new dataframe
+stations_df = stations.drop('geometry', axis=1).copy()
+
+#Use the dataframe as Bokeh ColumnDataSource
+psource = ColumnDataSource(stations_df)
+
+#Specify feature of the Hoover tool add a widget and costumize it
+
+TOOLTIPS2=[
     ("name", "@BIKE_SH"),
     ("capacity", "@STALLI")
 ]
-
 #Create the Map plot
-# range bounds supplied in web mercator coordinates
 p1 = figure(x_range=(1020414, 1024954), y_range=(5692309, 5698497),
-           x_axis_type="mercator", y_axis_type="mercator", tooltips=TOOLTIPS2)
-
+           x_axis_type="mercator", y_axis_type="mercator", tooltips=TOOLTIPS2,
+            title="Pass over the dots")
+p1.title.text_font_size = "25px"
+p1.title.align = "center"
+p1.title.text_color = "#3498DB"
+p1.title.background_fill_color = "#D1F2EB"
 #Add basemap tile
-p1.add_tile(get_provider(Vendors.CARTODBPOSITRON)) #bokeh version 1.1 
+p1.add_tile(get_provider(Vendors.CARTODBPOSITRON)) #bokeh version 1.1
 #p1.add_tile(CARTODBPOSITRON) #bokeh version 1.0
-
-#Add Glyphs
-p1.circle('Latitude', 'Longitude', source=psource, color='red', radius=10)
+#Add Glyphs radius change according to the zoom
+p1.circle('x', 'y', source=psource, color='blue', radius=40) #size=10
 
 #Add Labels and add to the plot layout
-# use css as render mode for html 
-labels = LabelSet(x='Latitude', y='Longitude', text='ID', level="glyph",
-              x_offset=5, y_offset=5, source=psource)
-		  
+labels = LabelSet(x='x', y='y', text='ID', text_color='blue',
+              x_offset=5, y_offset=5, source=psource,render_mode='canvas')
 p1.add_layout(labels)
-#layout2 = row(g4,g5) 
-layout=row(tab, p1)
+  
+g1= gridplot([tab, p1], ncols=2,plot_width=400, plot_height=400,toolbar_location="right")
+		  
+layout=(g1)
 #Output the plot
 output_file("templates/stat_bikes.html")
 show(layout)
