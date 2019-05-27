@@ -10,13 +10,20 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(mymap);
 
 function onEachFeature(feature, layer) {
-    var popupContent = "<p><b>Number of stalls</b>:" +
-				feature.properties.STALLI + "</p><p><b>Address</b>:" + 
-				feature.properties.INDIRIZZO + "</p>";
+    var popupContent = 
+                        "<b>Id</b>: " + 
+                			feature.properties.BIKE_SH +
+                			"<br><b>Number of stalls</b>: " +
+            				feature.properties.STALLI + 
+            				"<br><b>Number of bike available</b>: " +
+            				feature.properties.FREE + 
+            				"<br><b>Number of stalls free</b>: " +
+            				feature.properties.AVAILABLE
+            				;
     layer.bindPopup(popupContent)
 }
 
-L.geoJSON(bike_stalls,{
+L.geoJSON(stalls_free,{
     onEachFeature: onEachFeature
 }).addTo(mymap);
 

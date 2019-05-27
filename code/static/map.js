@@ -10,9 +10,11 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(mymap);
 
 function onEachFeature(feature, layer) {
-    var popupContent = "<p><b>Number of stalls</b>:" +
-				feature.properties.STALLI + "</p><p><b>Address</b>:" + 
-				feature.properties.INDIRIZZO + "</p>";
+    var popupContent =                        
+                         "<b>Id</b>: " + 
+                			feature.properties.BIKE_SH +
+                			"<br><b>Number of stalls</b>: " +
+            				feature.properties.STALLI ;
     layer.bindPopup(popupContent)
 }
 

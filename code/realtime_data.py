@@ -36,32 +36,31 @@ stations = pd.read_sql_table('stations',engine)
 stations.index = stations.ID
 stations = bike_free.merge(stations, how='outer', left_index=True, right_index=True)
 
-# serve eliminare i valori nan, scegliere come trasformare questi valori se 
-# renderli zero o non fare i calcoli in questo caso
-
 stalls_free = stations["STALLI"] - stations["available"]
-stalls_free =stalls_free.to_frame()
+stalls_free = stalls_free.to_frame()
+
+stations["available"] = stations["available"].fillna(999)
+stalls_free = stalls_free.fillna(999)
+
 stations.insert(0, 'free', stalls_free) 
 
 name_file = 'stalls_free'   
 url = 'static/'+name_file+'.geojson'
 
-# sotto funziona ma serve risorvere il punto prima
+features = []
+insert_features = lambda X: features.append(
+        geojson.Feature(geometry=geojson.Point((X["Longitude"],
+                                                X["Latitude"])),
+                        properties=dict(ID = X["ID"],
+                                        STALLI = X["STALLI"],
+                                        BIKE_SH = X["BIKE_SH"],
+                                        INDIRIZZO = X["INDIRIZZO"],
+                                        LOCALIZ = X["LOCALIZ"],
+                                        FREE = X["free"],
+                                        AVAILABLE = X["available"])))
+stations.apply(insert_features, axis=1)
 
-#features = []
-#insert_features = lambda X: features.append(
-#        geojson.Feature(geometry=geojson.Point((X["Longitude"],
-#                                                X["Latitude"])),
-#                        properties=dict(ID = X["ID"],
-#                                        STALLI = X["STALLI"],
-#                                        BIKE_SH = X["BIKE_SH"],
-#                                        INDIRIZZO = X["INDIRIZZO"],
-#                                        LOCALIZ = X["LOCALIZ"],
-#                                        FREE = X["free"],
-#                                        AVAILABLE = X["available"])))
-#stations.apply(insert_features, axis=1)
-#
-#with open(url, 'w', encoding='utf8') as fp:
-#    geojson.dump(geojson.FeatureCollection(features), fp, sort_keys=True, ensure_ascii=False)
-#
-#dS.add_var(url, name_file)
+with open(url, 'w', encoding='utf8') as fp:
+    geojson.dump(geojson.FeatureCollection(features), fp, sort_keys=True, ensure_ascii=False)
+
+dS.add_var(url, name_file)
