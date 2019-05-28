@@ -193,15 +193,15 @@ def tec_reg():
     return render_template('auth/tec_reg.html')
 
 
-#def bash_command(cmd):
-#    subprocess.Popen(cmd, shell=True)
-#bash_command('bokeh serve statistics.py --allow-websocket-origin=127.0.0.1:5000')
-#
-#@app.route('/statistics')
-#def statistics():
-#   session = pull_session(url="http://localhost:5006/statistics")
-#   bokeh_script=server_session(model=None, url="http://localhost:5006/statistics",session_id=session.id)
-#   return render_template("stat_bikes.html",bokeh_script=bokeh_script)
+def bash_command(cmd):
+    subprocess.Popen(cmd, shell=True)
+bash_command('bokeh serve ./statistics.py --allow-websocket-origin=127.0.0.1:5000')
+
+@app.route("/statistics")
+def statistics():
+    script=server_document("http://localhost:5006/statistics")
+    print(script)
+    return render_template('stat_bikes.html',bokS=script)
    
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
