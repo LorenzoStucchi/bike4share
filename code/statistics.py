@@ -101,7 +101,11 @@ p2_widget = Select(options = options_1, value = options_1[0], width=150,
 #callback needed to upload the graph
 def callback(attr, old, new):
     column2plot = p2_widget.value
-    data.data = {'x' : days, 'y': list(bike_days_med[str(column2plot[-1])])}
+    if int(column2plot[-2:]) > 9:
+        num = column2plot[-2:]
+    else:
+        num = column2plot[-1:]
+    data.data = {'x' : days, 'y': list(bike_days_med[num])}
     p2.vbar(x='x', top='y', source = data, width=0.9, line_color='white')
     p2.line('x', 'y', source = data, color = 'blue',line_width=2)
     p2.xaxis.formatter = FuncTickFormatter(code="""
