@@ -10,16 +10,28 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(mymap);
 
 function onEachFeature(feature, layer) {
-    var popupContent = 
-                        "<b>Id</b>: " + 
-                			feature.properties.BIKE_SH +
-                			"<br><b>Number of stalls</b>: " +
-            				feature.properties.STALLI + 
-            				"<br><b>Number of bike available</b>: " +
-            				feature.properties.FREE + 
-            				"<br><b>Number of stalls free</b>: " +
-            				feature.properties.AVAILABLE
-            				;
+    if (feature.properties.FREE == 999)
+        var popupContent = 
+                            "<b>Id</b>: " + 
+                    			feature.properties.BIKE_SH +
+                    			"<br><b>Number of stalls</b>: " +
+                				feature.properties.STALLI + 
+                				"<br><b>Number of bike available</b>: " +
+                				"Not realtime data" + 
+                				"<br><b>Number of stalls free</b>: " +
+                				"Not realtime data"
+                				;
+    else
+        var popupContent = 
+                            "<b>Id</b>: " + 
+                    			feature.properties.BIKE_SH +
+                    			"<br><b>Number of stalls</b>: " +
+                				feature.properties.STALLI + 
+                				"<br><b>Number of bike available</b>: " +
+                				feature.properties.FREE + 
+                				"<br><b>Number of stalls free</b>: " +
+                				feature.properties.AVAILABLE
+                				;                         				
     layer.bindPopup(popupContent)
 }
 
