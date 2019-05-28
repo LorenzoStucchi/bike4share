@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Statistics{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {{ bokS|indent(4)|safe }}
+{% endblock %}
+

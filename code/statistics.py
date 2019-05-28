@@ -8,7 +8,7 @@ import geopandas as gpd
 from sqlalchemy import create_engine
 from psycopg2 import connect
 from bokeh.plotting import figure, show, output_file
-from bokeh.models import ColumnDataSource, Select, FuncTickFormatter, LabelSet,TapTool
+from bokeh.models import ColumnDataSource, Select, FuncTickFormatter, LabelSet
 from bokeh.io import curdoc
 from bokeh.layouts import row,gridplot,column
 from bokeh.models.widgets import Panel, Tabs
@@ -17,7 +17,7 @@ from bokeh.tile_providers import get_provider, Vendors #bokeh version 1.1
 
 
 # Access to database
-myFile = open('dbConfig.txt')
+myFile = open('C:/Users/sara maffioli/Documents/GitHub/bike4share/code/dbConfig.txt')
 connStr = myFile.readline()
 data_conn = connStr.split(" ",2)
 dbname = data_conn[0].split("=",1)[1]
@@ -153,7 +153,11 @@ p3_widget = Select(options= options_1, value= options_1[0], width=150,
 #callback needed to upload the graph
 def callback2(attr, old, new):
     column3plot = p3_widget.value
-    data_m.data = {'x' : months, 'y': list(bike_months_med[str(column3plot[-1])])}
+    if int(column3plot[-2:]) > 9:
+        num = column3plot[-2:]
+    else:
+        num = column3plot[-1:]
+    data_m.data = {'x' : months, 'y': list(bike_months_med[num])}
     p3.vbar(x='x', top='y', source = data_m, width=0.9, line_color='white')
     p3.line('x', 'y', source = data_m, color = 'blue',line_width=2)
     p3.xaxis.formatter = FuncTickFormatter(code="""
@@ -202,7 +206,11 @@ p4_widget = Select(options = options_1, value = options_1[0], width=150,
 #callback needed to upload the graph
 def callback4(attr, old, new):
     column4plot = p4_widget.value
-    data_4.data = {'x' : days, 'y': list(bike_days_tot[str(column4plot[-1])])}
+    if int(column4plot[-2:]) > 9:
+        num = column4plot[-2:]
+    else:
+        num = column4plot[-1:]
+    data_4.data = {'x' : days, 'y': list(bike_days_tot[num])}
     p4.vbar(x='x', top='y', source = data_4, width=0.9, line_color='white',color='#DA1414')
     p4.line('x', 'y', source = data_4, color = 'red',line_width=2)        
     p4.xaxis.formatter = FuncTickFormatter(code="""
@@ -250,7 +258,11 @@ p5_widget = Select(options= options_1, value= options_1[0], width=150,
 #callback needed to upload the graph
 def callback5(attr, old, new):
     column5plot = p5_widget.value
-    data_5.data = {'x' : months, 'y': list(bike_months_tot[str(column5plot[-1])])}
+    if int(column5plot[-2:]) > 9:
+        num = column5plot[-2:]
+    else:
+        num = column5plot[-1:]
+    data_5.data = {'x' : months, 'y': list(bike_months_tot[num])}
     p5.vbar(x='x', top='y', source = data_5, width=0.9, line_color='white',color='#DA1414')
     p5.line('x', 'y', source = data_5, color = 'red',line_width=2)        
     p5.xaxis.formatter = FuncTickFormatter(code="""
@@ -294,7 +306,11 @@ p6_widget = Select(options= options_1, value= options_1[0], width=150,
 #callback needed to upload the graph
 def callback6(attr, old, new):
     column6plot = p6_widget.value
-    data_6.data = {'x' : day2, 'y': list(bikes_weekend[str(column6plot[-1])])}
+    if int(column6plot[-2:]) > 9:
+        num = column6plot[-2:]
+    else:
+        num = column6plot[-1:]
+    data_6.data = {'x' : day2, 'y': list(bikes_weekend[num])}
     p6.line('x', 'y', source = data_6, color = 'orange',line_width=2)
     label_dict_2 = {4:'Friday',5:'Saturday',6:'Sunday'}
     p6.xaxis.formatter = FuncTickFormatter(code="""
@@ -317,12 +333,12 @@ g6= gridplot([p6_widget, p6], ncols=2, plot_height=400,toolbar_location="right")
 g6_panel = Panel(child=g6, title='Availability weekend')
 # Assign the panels to Tabs
 
-tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel])
+#tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel])
          
 '''MAP PLOT'''
 
 #Importing data
-stations = gpd.read_file("data/stations.shp").to_crs(epsg=3857)
+stations = gpd.read_file("C:/Users/sara maffioli/Documents/GitHub/bike4share/code/data/stations.shp").to_crs(epsg=3857)
 #create a function to extract coordinates from the geodataframe 
 def getPointCoords(rows, geom, coord_type):
     """Calculates coordinates ('x' or 'y') of a Point geometry"""
@@ -349,7 +365,7 @@ TOOLTIPS2=[
 #Create the Map plot
 p1 = figure(x_range=(1020414, 1024954), y_range=(5692309, 5698497),
            x_axis_type="mercator", y_axis_type="mercator", tooltips=TOOLTIPS2,
-            title="Pass over the dots")
+           title="Move over the map", height=400)
 p1.title.text_font_size = "25px"
 p1.title.align = "center"
 p1.title.text_color = "#3498DB"
@@ -364,10 +380,10 @@ p1.circle('x', 'y', source=psource, color='blue', radius=40) #size=10
 labels = LabelSet(x='x', y='y', text='ID', text_color='blue',
               x_offset=5, y_offset=5, source=psource,render_mode='canvas')
 p1.add_layout(labels)
-  
-g1= gridplot([tab, p1], ncols=2,plot_width=400, plot_height=400,toolbar_location="right")
-		  
-layout=(g1)
+#g1= gridplot([tab,p1], ncols=2, toolbar_location="right")
+g1_panel = Panel(child=p1, title='Map')
+tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel,g1_panel])		  
+layout=(tab)
 #Output the plot
 output_file("templates/stat_bikes.html")
 show(layout)
