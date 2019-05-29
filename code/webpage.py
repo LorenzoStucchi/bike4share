@@ -7,6 +7,7 @@ from bokeh.embed import server_document
 import subprocess
 
 from psycopg2 import connect
+import platform
 
 import downloadStation
 import realtime_data
@@ -194,10 +195,14 @@ def tec_reg():
 
 def bash_command(cmd):
     subprocess.Popen(cmd, shell=True)
-# Windows command
-bash_command('bokeh serve ./statistics.py --allow-websocket-origin=127.0.0.1:5000')
-# Mac command
-bash_command('bokeh serve ./statistics.py --allow-websocket-origin=localhost:5000')
+    
+# check Operating System
+if platform.system() == 'Windows':  
+    bash_command('bokeh serve ./statistics.py --allow-websocket-origin=127.0.0.1:5000')
+elif platform.system() == 'Darwin':  
+    bash_command('bokeh serve ./statistics.py --allow-websocket-origin=localhost:5000')
+else:
+    bash_command('bokeh serve ./statistics.py --allow-websocket-origin=localhost:5000')
 
 @app.route("/statistics")
 def statistics():
