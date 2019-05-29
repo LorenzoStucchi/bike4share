@@ -17,7 +17,7 @@ from bokeh.tile_providers import get_provider, Vendors #bokeh version 1.1
 
 
 # Access to database
-myFile = open('C:/Users/sara maffioli/Documents/GitHub/bike4share/code/dbConfig.txt')
+myFile = open('dbConfig.txt')
 connStr = myFile.readline()
 data_conn = connStr.split(" ",2)
 dbname = data_conn[0].split("=",1)[1]
@@ -338,7 +338,7 @@ g6_panel = Panel(child=g6, title='Availability weekend')
 '''MAP PLOT'''
 
 #Importing data
-stations = gpd.read_file("C:/Users/sara maffioli/Documents/GitHub/bike4share/code/data/stations.shp").to_crs(epsg=3857)
+stations = gpd.read_file("data/stations.shp").to_crs(epsg=3857)
 #create a function to extract coordinates from the geodataframe 
 def getPointCoords(rows, geom, coord_type):
     """Calculates coordinates ('x' or 'y') of a Point geometry"""
