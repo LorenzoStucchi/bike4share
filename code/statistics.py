@@ -23,6 +23,8 @@ data_conn = connStr.split(" ",2)
 dbname = data_conn[0].split("=",1)[1]
 username = data_conn[1].split("=",1)[1]
 password = data_conn[2].split("=",1)[1]
+conn = connect(connStr)
+cur = conn.cursor()
 
 #connection to the db
 engine = create_engine('postgresql://'+username+':'+password+'@localhost:5432/'+dbname)
@@ -336,7 +338,7 @@ g6_panel = Panel(child=g6, title='Availability weekend')
 '''MAP PLOT'''
 
 #Importing data
-stations = gpd.read_file("data/stations.shp").to_crs(epsg=3857)
+stations = gpd.read_file("data/stazioni.geojson").to_crs(epsg=3857)
 #create a function to extract coordinates from the geodataframe 
 def getPointCoords(rows, geom, coord_type):
     """Calculates coordinates ('x' or 'y') of a Point geometry"""
