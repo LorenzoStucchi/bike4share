@@ -194,7 +194,10 @@ def tec_reg():
 
 def bash_command(cmd):
     subprocess.Popen(cmd, shell=True)
+# Windows command
 bash_command('bokeh serve ./statistics.py --allow-websocket-origin=127.0.0.1:5000')
+# Mac command
+bash_command('bokeh serve ./statistics.py --allow-websocket-origin=localhost:5000')
 
 @app.route("/statistics")
 def statistics():

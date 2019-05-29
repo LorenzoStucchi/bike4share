@@ -23,8 +23,6 @@ data_conn = connStr.split(" ",2)
 dbname = data_conn[0].split("=",1)[1]
 username = data_conn[1].split("=",1)[1]
 password = data_conn[2].split("=",1)[1]
-conn = connect(connStr)
-cur = conn.cursor()
 
 #connection to the db
 engine = create_engine('postgresql://'+username+':'+password+'@localhost:5432/'+dbname)
