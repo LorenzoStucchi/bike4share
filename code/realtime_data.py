@@ -2,7 +2,6 @@ import pandas as pd
 from sqlalchemy import create_engine
 import time
 from datetime import date
-import downloadStation as dS
 import geojson
 
 myFile = open('dbConfig.txt')
@@ -63,4 +62,7 @@ stations.apply(insert_features, axis=1)
 with open(url, 'w', encoding='utf8') as fp:
     geojson.dump(geojson.FeatureCollection(features), fp, sort_keys=True, ensure_ascii=False)
 
-dS.add_var(url, name_file)
+with open(url,"r+") as f:
+    features = f.read()
+    f.seek(0)
+    f.write("var "+name_file+" = ["+features+"];")

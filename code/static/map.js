@@ -18,6 +18,6 @@ function onEachFeature(feature, layer) {
     layer.bindPopup(popupContent)
 }
 
-L.geoJSON(bike_stalls,{
+L.geoJSON(stations,{
     onEachFeature: onEachFeature
 }).addTo(mymap);

@@ -29,12 +29,13 @@ def data_to_geojson(url):
     data2geojson(data,url)
     
 def add_var(url,name_file):
-    with open(url,"r+") as f:
-        features = f.read()
+    f = open('static/var_stat.geojson',"w")
+    with open(url,"r+") as f1:
+        features = f1.read()
         f.seek(0)
         f.write("var "+name_file+" = ["+features+"];")
 
-name_file = 'bike_stalls'   
+name_file = 'stations'   
 url = 'static/'+name_file+'.geojson'
 
 data_to_geojson(url)

@@ -338,7 +338,7 @@ g6_panel = Panel(child=g6, title='Availability weekend')
 '''MAP PLOT'''
 
 #Importing data
-stations = gpd.read_file("data/stazioni.geojson").to_crs(epsg=3857)
+stations = gpd.read_file("static/stations.geojson").to_crs(epsg=3857)
 #create a function to extract coordinates from the geodataframe 
 def getPointCoords(rows, geom, coord_type):
     """Calculates coordinates ('x' or 'y') of a Point geometry"""
