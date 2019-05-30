@@ -212,7 +212,7 @@ else:
 def statistics():
     script=server_document("http://localhost:5006/statistics")
     print(script)
-    return render_template('hello.html',bokS=script)
+    return render_template('statistics.html',bokS=script)
    
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
