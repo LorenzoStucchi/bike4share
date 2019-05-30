@@ -22,11 +22,13 @@ commands = (
             user_id SERIAL PRIMARY KEY,
             user_name VARCHAR(255) UNIQUE NOT NULL,
             user_password VARCHAR(255) NOT NULL,
+            user_mail VARCHAR(255),
             user_type VARCHAR(255)
+            
         )
         
         """)   
-   
+ 
 #KEY GENERATOR
 def key_generator():
     arr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!£$%&/()=?^"
@@ -68,11 +70,11 @@ s_k.to_csv('secret_key.txt', header=None, index=None, sep='\n')
 db_url = 'postgresql://'+username+':'+password+'@localhost:5432/'+dbname
 engine = create_engine(db_url)
 # Import dataframe of bike and stalls
-df = pd.read_csv('./server_data/bike.csv')
+df = pd.read_csv('./data/bike.csv')
 df.to_sql('bike_stalls', engine, if_exists='replace', index=False)
 print('Added dataframe of bike and stalls')
 # Import geodataframe of the stations (csv)
-gdf = pd.read_csv('./server_data/stations.csv')
+gdf = pd.read_csv('./data/stations.csv')
 gdf.to_sql('stations', engine, if_exists='replace', index=False)
 print('Added dataframe of stations')
 # Close connection 

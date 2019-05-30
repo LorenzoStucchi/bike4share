@@ -49,7 +49,7 @@ def load_logged_in_user():
         return False
     else: 
         return True
-
+    
 downloadStation
 realtime_data
 
@@ -70,7 +70,8 @@ def index():
 def register():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
+        password = request.form['password']   
+        user_mail= request.form['user_mail']
         user_type = 'u'
         error = None
 
@@ -78,6 +79,9 @@ def register():
             error = 'Username is required.'
         elif not password:
             error = 'Password is required.'
+        elif not user_mail:
+            error = 'E-mail is required.'
+            
         else :
             conn = get_dbConn()
             cur = conn.cursor()
@@ -91,8 +95,8 @@ def register():
             conn = get_dbConn()
             cur = conn.cursor()
             cur.execute(
-                'INSERT INTO user_bike (user_name, user_password, user_type) VALUES (%s, %s, %s)',
-                (username, generate_password_hash(password), user_type)
+                'INSERT INTO user_bike (user_name, user_password, user_mail, user_type) VALUES (%s, %s, %s, %s)',
+                (username, generate_password_hash(password), user_mail, user_type)
             )
             cur.close()
             conn.commit()
@@ -208,7 +212,7 @@ else:
 def statistics():
     script=server_document("http://localhost:5006/statistics")
     print(script)
-    return render_template('statistics.html',bokS=script)
+    return render_template('hello.html',bokS=script)
    
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
