@@ -69,6 +69,7 @@ def index():
 #USER REGISTRATION
 @app.route('/register', methods=('GET', 'POST'))
 def register():
+    load_logged_in_user()
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']   
@@ -110,6 +111,7 @@ def register():
 #TECH REGISTRATION
 @app.route('/tec_reg', methods=('GET', 'POST'))
 def tec_reg():
+    load_logged_in_user()
     if request.method =='POST':
         secret_code = request.form['secret_code']
         username = request.form['username']
@@ -163,6 +165,7 @@ def tec_reg():
 
 @app.route('/login', methods=('GET', 'POST'))
 def login():
+    load_logged_in_user()
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -207,8 +210,9 @@ else:
 
 @app.route("/statistics")
 def statistics():
+    load_logged_in_user()
     script=server_document("http://localhost:5006/statistics")
-    print(script)
+    print(script)   
     return render_template('statistics.html',bokS=script)
    
 # If we're running in stand alone mode, run the application

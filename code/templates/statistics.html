@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 
+
 {% block header %}
 <h1>{% block title %}Statistics{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-    {{ bokS|indent(4)|safe }}
+	{% if g.user[4] == 't' %}
+	    {{ bokS|indent(4)|safe }}
+	{% else %}
+		{% if g.user[4] == 'u' %}
+		    <p>
+    			This page is reserved for tecnician. Goes back to the <a href="/index">WebGIS</a>
+ 		 	</p>
+		{% else%}
+		     <p>
+    			You must be logged in to access to this area, please <a href="/login">log in</a>
+ 		 	</p>
+		{%endif%}
+	{% endif %}
 {% endblock %}
 
