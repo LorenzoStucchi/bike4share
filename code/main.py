@@ -88,7 +88,7 @@ def register():
             cur.execute(
             'SELECT user_id FROM user_bike WHERE user_name = %s', (username,))
             if cur.fetchone() is not None:
-                error = 'User {} is already registered.'.format(username)
+                error = 'User {} is already registered, please change your username'.format(username)
                 cur.close()
 
         if error is None:
@@ -120,9 +120,8 @@ def login():
         user = cur.fetchone()
         cur.close()
         conn.commit()
-
-        if user is None:
-            error = 'Incorrect username.'
+        if user is None:            
+            error ='the username {} does not exixst.'.format(username)
         elif not check_password_hash(user[2], password):
             error = 'Incorrect password.'
 
