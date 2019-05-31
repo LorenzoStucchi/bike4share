@@ -21,14 +21,26 @@ The aim of the project is to develop a web application called “bike4share” f
 The “bike4share” application must provide a service of registration and of log-in both for user and technician. The user information related to availability and location of bikes and free stall are shown by a web map, one of main functionalities of “bike4share”. The user can have access to premium functions through the registration on web service, for example the mean of the available bikes and stalls in a certain hour that can be selected or the notification of availability or full over a certain level. There is also a mail service to ensure the recovery of the forgot password.
 “bike4share” must provide to the technician a dedicated analytics section, in order to analyse and study the bike stations trends in real time and also during a set span of time. This analytics section guarantees statistic, like mean of bikes used during a certain period, and graphs showing trends, relying on the data stored in a designed database.
 \subsection{Definitions, acronyms, abbreviations}
----
+DB:database\\
+DBMS: database management system\\
+b4s: bike4share\\
+HW: hardware\\
+SW: software\\
+RASD: requirement analysis and specification document
 \subsection{Reference documents}
----
+the following documents are taken as reference for the developing of the b4s web application:
+\begin{itemize}
+    \item SE4G Lab assignment:GreatBikes given by Prof.ssa Elisabetta Di Nitto, PhD Eng. Daniele Oxoli
+    \item Flask Web Developement -developing web application with Python- written by Miguel Grinberg
+    \item Hands-On Data Visualization with Bokeh written by Kevin Jolly 
+\end{itemize}
+
+
 \subsection{Overview}
-The RASD document is structured in four main chapters, i.e. Introduction, Overall Description, Specific Requirements and Appendices. The next chapter, “2 Overall Description “, is divided in five subchapters devoted to the description of the external interfaces and shared phenomena, summary of the major product functions, user characteristics, constraints and last one devoted to assumptions and dependencies.
-In the third chapter, ”3 Specific Requirements ”, is presented a full list of the requirements and the associated use cases. Always in this section two subchapters are present: one devoted to the specifications about the design constraints, such as standards compliance and hardware limitations and the other one is focus on the software system attributes, i.e. reliability, availability, security, maintainability and portability.
+The RASD document is structured in four main chapters, i.e. Introduction, Overall Description, Specific Requirements and Appendices. 
 
 \section{Overall Description}
+this chapter is divided in five subchapters devoted to the description of the external interfaces and shared phenomena, summary of the major product functions, user characteristics, constraints and last one devoted to assumptions and dependencies.
 \subsection{Product perspective}
 Our web application “bike4share” will work thanks to several components supporting it. As shown in the scheme in Figure \ref{fig:schema}, we can recognise three levels of the system: Data, Software and User. 
 Starting from the bottom and considering the inputs, Data are retrieved from two Databases, one for the registered users and technicians and one for the information regarding the bike stations. 
@@ -37,7 +49,7 @@ The third level is the one regarding the user, capable of viewing the map to obt
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\linewidth]{image/overallview.PNG}
+    \includegraphics[width=0.75\linewidth]{image/BIKE4SHARE_SCHEMA.png}
     \caption{Overall view of "bike4share" system}
     \label{fig:schema}
 \end{figure}
@@ -78,10 +90,31 @@ There is also a specific section of the application “bike4share” devoted to 
     \item Registered technician is required to have a smartphone or a computer with internet connection in order to access the devoted section of the application;
 \end{itemize}
 
-\section{Specific Requirements} 
+\section{Specific Requirements}
+In this chapter is presented a full list of the requirements and the associated use cases.it is divided in two subchapters, one devoted to the specifications about the design constraints, such as standards compliance and hardware limitations,while the second one is focused on the software system attributes, i.e. reliability, availability, security, maintainability and portability.
+
 \subsection{External Interface Requirements}
+in the following section will be describe in detail how the different interfaces are designed and represented in the b4s web application
 \subsubsection{User Interfaces}
----
+there are different kind of interfaces because in the b4s application there are different kind of users, so for any of this different categories there will be more or less functionality visible directly from the interfaces.\\
+At the beginning every users will see the same homepage as shown in Figure \ref{fig:homepage}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{image/bike4share_user_homepage.PNG}
+    \caption{"bike4share" common users interface}
+    \label{fig:homepage}
+\end{figure}
+
+\chapter{3.1.1.1 USE CASE:Log-In}\\
+
+In this interface the user is registered yet so it's sufficient to follow the log in procedure and compile the requested fields Figure \ref{fig:log-in 2}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{image/log-in_interface.PNG}
+    \caption{"bike4share" common users interface}
+    \label{fig:log-in 2}
+\end{figure}
+
 \subsubsection{Hardware Interfaces}
 ---
 \subsubsection{Software Interfaces}
@@ -206,15 +239,16 @@ The system requires to insert the user name, the e-mail address associated to th
 \end{itemize}
 \item Entry Condition: 
 \begin{itemize}
-    \item user wants to see on a map how many bikes and how many stalls are available for each station.
+    \item user wants to see on a map how many stalls are available for each station.
 \end{itemize}
 \item Flow of events: 
 \begin{itemize}
-    \item user manually checks in the map where are the stations and the number of free bikes/stalls that are available in that place in real-time
+    \item user manually checks in the map where the stations are and the numbers of stalls.
 \end{itemize}
 \item Exit Condition: 
 \begin{itemize}
-    \item If there is availability of bikes in the interested area at this time (estimation of return time of the bike if it exists?) and the user successfully goes to the bike station, otherwise the user closes, logs out  the application.
+    \item The user has finished to look at the number of stalls and exits from the application. 
+    \item the user want to access better functionalities and decides to make the registration procedure
 \end{itemize}
 \item Exceptions
 \begin{itemize}
@@ -224,12 +258,12 @@ The system requires to insert the user name, the e-mail address associated to th
 \end{itemize}
 \end{enumerate}
 
- Scenario 4: “bike4share” Data Visualization (BASIC FUNCTION) \\
+Scenario 4: “bike4share” Data Visualization (BASIC FUNCTION) \\
 Max is a student and he has to go to the university but in the morning there’s an underground line services strike so he wants to see on the map how many bikes and how many stalls are available in real-time near Centrale underground station where he is forced to stopped and near his university in Piazza Leonardo which he has to reach. 
 Thanks to “bike4share” WebApp BASICS FUNCTION he can manually check on the map that there are 2 bike stalls near the underground station and many different bikes available but there aren’t any stalls near Piazza Leonardo so he close the application and maybe he has to find another way to reach the university.
 
 
-\subsubsection{\textbf{USE CASE}: Data Visualization (PREMIUM)}
+\subsubsection{\textbf{USE CASE}: Data Visualization (PREMIUM FUNCTION)}
 \begin{enumerate}
 \item Participating actors: 
 \begin{itemize}
