@@ -136,8 +136,9 @@ $RECYCLE.BIN/
 # Spyder project
 .spyproject/
 
-# Secret key
+# file that changes at every launch
 code/secret_key.txt
+code/static/stalls_free.geojson
 
 # Python cache
 code/__pycache__/

@@ -12,7 +12,7 @@ import os
 
 import downloadStation
 import realtime_data
-import post
+from post import mail_sender
 
 # Create the application instance
 app = Flask(__name__, template_folder="templates")
@@ -194,35 +194,31 @@ def login():
     return render_template('auth/login.html')
 
 #FORGOT PASSWORD: it allows to recovery the forgotten password
-@app.route('/')
 @app.route('/forgotpassword', methods=('GET', 'POST'))
-def ForgotPassword():
-    if request.method == 'POST':
-       user_mail= request.form['user_mail']
+def forgotpassword():
+   if request.method == 'POST':
+       mail_lostp = request.form['user_mail']
        error = None
-       
-    if not user_mail:
+       if not mail_lostp:
            error = 'E-mail is required for the Password Recovery'
-            
-    else :
+       else :
             conn = get_dbConn()
             cur = conn.cursor()
             cur.execute(
-            'SELECT user_mail FROM user_bike WHERE user_mail = %s', (user_mail,))
-            if    cur.fetchone() is not None:
-                  sendmail=cur.fetchone()
-                  cur.close()
-                  conn.commit()
-                  
-            elif  cur.fetchone() is not None:
-                  error = 'E-mail {} is not present, please check it or make the registration procedure again'.format(user_mail)
-                  cur.close()
-                  flash(error)
-                        
-    if error is None:
-            post(sendmail)
-            
-    return render_template('auth/forgotpassword.html')
+            'SELECT user_mail FROM user_bike WHERE user_mail = %s', (mail_lostp,))
+            if cur.fetchone() is not None:
+                cur.close()
+                conn.commit()
+                
+            elif cur.fetchone() is not None:
+                error = 'E-mail {} is not present, please check it or make the registration procedure again'.format(mail_lostp)
+                cur.close()
+                   
+       if error is None:
+           mail_sender(mail_lostp)
+           error = 'Email is sent check in your inbox or SPAM folder'
+       flash(error)
+   return render_template('auth/forgotpassword.html')
 
 @app.route('/logout')
 def logout():
