@@ -14,6 +14,9 @@
       Welcome {{ g.user[1] }}!
       <ul>
       <li><a href="/logout">Log Out</a></li>
+      {% if g.user[4] == 't' %}
+      <li><a href="/statistics">Technical area</a></li>
+      {% endif %}
       </ul>
     {% else %}
   <ul>      

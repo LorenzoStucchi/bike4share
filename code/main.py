@@ -8,6 +8,7 @@ import subprocess
 
 from psycopg2 import connect
 import platform
+import os
 
 import downloadStation
 import realtime_data
@@ -15,7 +16,7 @@ import realtime_data
 # Create the application instance
 app = Flask(__name__, template_folder="templates")
 # Set the secret key to some random bytes. Keep this really secret!
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = os.urandom(24) 
 
 # function
 def get_dbConn():
@@ -106,43 +107,9 @@ def register():
 
     return render_template('auth/register.html')
 
-@app.route('/login', methods=('GET', 'POST'))
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        conn = get_dbConn()
-        cur = conn.cursor()
-        error = None
-        cur.execute(
-            'SELECT * FROM user_bike WHERE user_name = %s', (username,)
-        )
-        user = cur.fetchone()
-        cur.close()
-        conn.commit()
-        if user is None:            
-            error ='the username {} does not exixst.'.format(username)
-        elif not check_password_hash(user[2], password):
-            error = 'Incorrect password.'
-
-        if error is None:
-            session.clear()
-            session['user_id'] = user[0]
-            return redirect(url_for('index'))
-
-        flash(error)
-
-    return render_template('auth/login.html')
-
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for('index'))
-
 #TECH REGISTRATION
 @app.route('/tec_reg', methods=('GET', 'POST'))
 def tec_reg():
-    
     if request.method =='POST':
         secret_code = request.form['secret_code']
         username = request.form['username']
@@ -161,40 +128,71 @@ def tec_reg():
         if s_k is None:
             error = ' Incorrect secret key, Please contact the administrator to obtain it.'
             flash(error)
-        else:
-            if not username:
-                error = 'Username is required.'
-            elif not password:
-                error = 'Password is required.'
-            else :
-                conn = get_dbConn()
-                cur = conn.cursor()
-                cur.execute(
-                'SELECT user_id FROM user_bike WHERE user_name = %s', (username,))
-                if cur.fetchone() is not None:
-                    error = 'User {} is already registered.'.format(username)
-                    cur.close()
-                    
-            flash(error)
-            
-            if error is None:
-                conn = get_dbConn()
-                cur = conn.cursor()
-                user_type = 't'
-                cur.execute(
-                    'INSERT INTO user_bike (user_name, user_password, user_type) VALUES (%s, %s, %s)',
-                    (username, generate_password_hash(password), user_type)
-                )
-                cur.execute(
-                    'DELETE FROM key_list WHERE secret_key = %s',(secret_code,)
-                )
-                
+        elif not username:
+            error = 'Username is required.'
+        elif not password:
+            error = 'Password is required.'
+        else :
+            conn = get_dbConn()
+            cur = conn.cursor()
+            cur.execute(
+            'SELECT user_id FROM user_bike WHERE user_name = %s', (username,))
+            if cur.fetchone() is not None:
+                error = 'User {} is already registered.'.format(username)
                 cur.close()
-                conn.commit()
-                return redirect(url_for('login'))
-            
+        
+        if error is None:
+            conn = get_dbConn()
+            cur = conn.cursor()
+            user_type = 't'
+            cur.execute(
+                'INSERT INTO user_bike (user_name, user_password, user_type) VALUES (%s, %s, %s)',
+                (username, generate_password_hash(password), user_type)
+            )
+            cur.execute(
+                'DELETE FROM key_list WHERE secret_key = %s',(secret_code,)
+            )
+            cur.close()
+            conn.commit()
+            error = "Tecnician regitration done!"
+            return redirect(url_for('login'))
+
+        flash(error)
+        
     return render_template('auth/tec_reg.html')
 
+@app.route('/login', methods=('GET', 'POST'))
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        conn = get_dbConn()
+        cur = conn.cursor()
+        error = None
+        cur.execute(
+            'SELECT * FROM user_bike WHERE user_name = %s', (username,)
+        )
+        user = cur.fetchone()
+        cur.close()
+        conn.commit()
+        if user is None:            
+            error ='The username {} does not exist.'.format(username)
+        elif not check_password_hash(user[2], password):
+            error = 'Incorrect password.'
+
+        if error is None:
+            session.clear()
+            session['user_id'] = user[0]
+            return redirect(url_for('index'))
+
+        flash(error)
+
+    return render_template('auth/login.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 def bash_command(cmd):
     subprocess.Popen(cmd, shell=True)
