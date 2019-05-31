@@ -89,12 +89,20 @@ mymap.locate({setView: true, maxZoom: 16});
 
 function onLocationFound(e) {
     var rad = e.accuracy / 2;
-    L.circle(e.latlng,{
+    var position = L.circle(e.latlng,{
     color: 'blue',
     fillColor:'blue',
     radius: 1
     }).addTo(mymap);
     L.circle(e.latlng, rad).addTo(mymap);
+    var layer = position;
+    var nearest = leafletKnn(stat).nearest(e.latlng, 5);
+    var popupNearStation = nearest[0].layer._popup._content + "<br>"
+                            + nearest[1].layer._popup._content + "<br>"
+                            + nearest[2].layer._popup._content + "<br>"
+                            + nearest[3].layer._popup._content + "<br>"
+                            + nearest[4].layer._popup._content ;
+    layer.bindPopup(popupNearStation).openPopup()                       
 }
 
 mymap.on('locationfound', onLocationFound);
@@ -104,3 +112,10 @@ function onLocationError(e) {
 }
 
 mymap.on('locationerror', onLocationError);
+
+
+
+
+
+
+

@@ -8,6 +8,7 @@
     {% if g.user %}
         <div id="map_premium"></div>
         <script src="{{url_for('static', filename = 'stalls_free.geojson')}}" type="text/javascript"></script>
+        <script src="{{url_for('static', filename = 'leaflet-knn.js')}}" type="text/javascript"></script>
         <script src="{{url_for('static', filename = 'map_premium.js')}}" type="text/javascript"></script>
     {% else %}
         <div id="map"></div>
