@@ -5,33 +5,7 @@ Created on Wed May 29 19:38:41 2019
 @author: Federica Vaghi
 """
     
-    #FORGOT PASSWORD: it allows to recovery the forgotten password
-@app.route('/ForgotPassword', methods=('GET', 'POST'))
-def ForgotPassword():
-    if request.method == 'POST':
-       user_mail= request.form['user_mail']
-       error = None
-       
-    if not user_mail:
-           error = 'E-mail is required for the Password Recovery'
-            
-    else :
-            conn = get_dbConn()
-            cur = conn.cursor()
-            cur.execute(
-            'SELECT user_mail FROM user_bike WHERE user_mail = %s', (user_mail,))
-            if    cur.fetchone() is not None:
-                  sendmail=cur.fetchone()
-                  cur.close()
-                  conn.commit()
-                  
-            elif  cur.fetchone() is not None:
-                  error = 'E-mail {} is not present, please check it or make the registration procedure again'.format(user_mail)
-                  cur.close()
-                  flash(error)
-                  return render_template('auth/ForgotPassword.html')
-    if error is None:
-            post(sendmail)
+
 #function that allow to send an email, it'll take the address of the users automatically
 def post():  
     import smtplib
