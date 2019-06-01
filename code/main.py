@@ -209,17 +209,15 @@ def forgotpassword():
             cur = conn.cursor()
             cur.execute(
             'SELECT user_mail FROM user_bike WHERE user_mail = %s', (mail_lostp,))
-            if cur.fetchone() is not None:
-                cur.close()
-                conn.commit()
-                
-            elif cur.fetchone() is not None:
+            user = cur.fetchone()
+            if user is None:
                 error = 'E-mail {} is not present, please check it or make the registration procedure again'.format(mail_lostp)
-                cur.close()
-                   
+            cur.close()
+        
        if error is None:
-           mail_sender(mail_lostp)
-           error = 'Email is sent check in your inbox or SPAM folder'
+            mail_sender(mail_lostp)
+            error = 'Email is sent to {} check in your inbox or SPAM folder'.format(mail_lostp)
+        
        flash(error)
    return render_template('auth/forgotpassword.html')
 
