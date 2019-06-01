@@ -87,6 +87,7 @@ L.Control.geocoder({
 
 mymap.locate({setView: true, maxZoom: 16});
 
+
 function onLocationFound(e) {
     var rad = e.accuracy / 2;
     var position = L.circle(e.latlng,{
@@ -96,26 +97,32 @@ function onLocationFound(e) {
     }).addTo(mymap);
     L.circle(e.latlng, rad).addTo(mymap);
     var layer = position;
-    var nearest = leafletKnn(stat).nearest(e.latlng, 5);
-    var popupNearStation = nearest[0].layer._popup._content + "<br>"
-                            + nearest[1].layer._popup._content + "<br>"
-                            + nearest[2].layer._popup._content + "<br>"
-                            + nearest[3].layer._popup._content + "<br>"
-                            + nearest[4].layer._popup._content ;
-    layer.bindPopup(popupNearStation).openPopup()                       
+    var nearest = leafletKnn(stat).nearest(e.latlng, 5, 10000*1.61);
+    //console.log(nearest)
+    list_station(nearest)                   
 }
 
 mymap.on('locationfound', onLocationFound);
 
 function onLocationError(e) {
     alert(e.message);
+    $('#nearest_stalls').html(
+        "<p>"+ "<b>List of nearest stations</b>: <br><br>" + 
+        "You need to allow position to see the nearest stations" + 
+        "</p>" 
+    )
 }
 
 mymap.on('locationerror', onLocationError);
 
-
-
-
-
-
-
+function list_station(l){
+    $('#nearest_stalls').html(
+        "<p>"+ "<b>List of nearest stations</b>: <br><br>" + 
+            l[0].layer._popup._content + "<br><br>"
+            + l[1].layer._popup._content + "<br><br>"
+            + l[2].layer._popup._content + "<br><br>"
+            + l[3].layer._popup._content + "<br><br>"
+            + l[4].layer._popup._content +
+        "</p>" 
+    )
+}
