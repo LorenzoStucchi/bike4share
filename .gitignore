@@ -138,7 +138,7 @@ $RECYCLE.BIN/
 
 # file that changes at every launch
 code/secret_key.txt
-code/static/stalls_free.geojson
+*.geojson
 
 # Python cache
 code/__pycache__/
