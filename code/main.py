@@ -117,6 +117,7 @@ def tec_reg():
         secret_code = request.form['secret_code']
         username = request.form['username']
         password = request.form['password']
+        user_mail= request.form['user_mail']
         
         conn = get_dbConn()
         cur = conn.cursor()
@@ -135,6 +136,8 @@ def tec_reg():
             error = 'Username is required.'
         elif not password:
             error = 'Password is required.'
+        elif not user_mail:
+            error = 'E-mail is required.'
         else :
             conn = get_dbConn()
             cur = conn.cursor()
@@ -149,8 +152,8 @@ def tec_reg():
             cur = conn.cursor()
             user_type = 't'
             cur.execute(
-                'INSERT INTO user_bike (user_name, user_password, user_type) VALUES (%s, %s, %s)',
-                (username, generate_password_hash(password), user_type)
+                'INSERT INTO user_bike (user_name, user_password, user_mail, user_type) VALUES (%s, %s, %s, %s)',
+                (username, generate_password_hash(password), user_mail, user_type)
             )
             cur.execute(
                 'DELETE FROM key_list WHERE secret_key = %s',(secret_code,)
