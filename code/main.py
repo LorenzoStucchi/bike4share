@@ -224,6 +224,55 @@ def forgotpassword():
        flash(error)
    return render_template('auth/forgotpassword.html')
 
+#@app.route('/set_new_password', methods=('GET', 'POST'))
+#def set_new_password():
+#    load_logged_in_user()
+#    if request.method =='POST':
+#        given_code = request.form['psw_recovery']
+#        username = request.form['username']
+#        new_password = request.form['new_password']
+#        conn = get_dbConn()
+#        cur = conn.cursor()
+#        error = None
+#        cur.execute(
+#            'SELECT * FROM password_recovery WHERE psw_recovery = %s', (given_code,)
+#        )
+#        p_r = cur.fetchone()
+#        cur.close()
+#        conn.commit()
+#        
+#        if p_r is None:
+#            error = ' Incorrect secret key, Please follow the Forgot Password procedure to obtain it.'
+#            flash(error)
+#        elif not username:
+#            error = 'Username is required.'
+#        elif not new_password:
+#            error = 'New password is required.'
+#            
+#        else :
+#            conn = get_dbConn()
+#            cur = conn.cursor()
+#            cur.execute(
+#            'SELECT user_id FROM user_bike WHERE user_name = %s', (username,))
+#            
+#        
+#        if error is None:
+#            conn = get_dbConn()
+#            cur = conn.cursor()                        
+#            cur.execute(                    
+#                'INSERT INTO user_bike (user_name, user_password)  VALUES (%s,%s)' , (username, new_password,))
+#            cur.execute(
+#                'DELETE FROM password_recovery WHERE psw_recovery = %s',(given_code,)
+#            cur.close()
+#            conn.commit()
+#            error = "new password is been set!"
+#            return redirect(url_for('login'))
+#
+#        flash(error)
+#        
+#    return render_template('auth/forgotpassword.html')
+        
+
 @app.route('/logout')
 def logout():
     session.clear()

@@ -92,7 +92,7 @@ s_k.to_csv('secret_key.txt', header=None, index=None, sep='\n')
 p_r = pd.DataFrame({"psw"})
 rec_key = psw_rec_generator()
 cur.execute('INSERT INTO password_recovery (psw_recovery) VALUES (%s)', (rec_key,))
-p_r.loc[i] = [rec_key]    
+#p_r.loc[i] = [rec_key]    
 print('Added secret psw', (rec_key,))
 ## Save psw_recovery into a txt file
 p_r.to_csv('psw_recovery.txt', header=None, index=None, sep='\n')
