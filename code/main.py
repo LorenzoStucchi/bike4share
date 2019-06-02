@@ -11,9 +11,9 @@ import platform
 import os
 
 import downloadStation
-import realtime_data
+#import realtime_data
 from post import mail_sender
-from createSchema import psw_rec_generator
+
 
 # Create the application instance
 app = Flask(__name__, template_folder="templates")
@@ -54,7 +54,7 @@ def load_logged_in_user():
         return True
     
 downloadStation
-realtime_data
+#realtime_data
 
 # Create a URL route in our application for "/"
 @app.route('/')
@@ -216,10 +216,13 @@ def forgotpassword():
             cur.close()
         
        if error is None:
-             rec_password=psw_rec_generator()
-             print('the secret psw is',(rec_password,) )
-             mail_sender(mail_lostp,rec_password)
-             error = 'Email is sent to {} check in your inbox or SPAM folder'.format(mail_lostp)
+
+             conn = get_dbConn()
+             cur = conn.cursor()
+             rec_password=mail_sender(mail_lostp)
+             error = 'Email is sent to {} check in your inbox or SPAM folder'.format(mail_lostp)                            
+             print('Added secret psw for recovery password', (rec_password,))
+             cur.close()
         
        flash(error)
    return render_template('auth/forgotpassword.html')
