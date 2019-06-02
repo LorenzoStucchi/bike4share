@@ -14,7 +14,10 @@ from bokeh.layouts import row,gridplot,column
 from bokeh.models.widgets import Panel, Tabs
 from bokeh.tile_providers import get_provider, Vendors #bokeh version 1.1
 #from bokeh.tile_providers import CARTODBPOSITRON #bokeh version 1.0
-
+import time
+from datetime import date,timedelta
+import geojson
+import datetime
 
 # Access to database
 myFile = open('dbConfig.txt')
@@ -31,6 +34,48 @@ engine = create_engine('postgresql://'+username+':'+password+'@localhost:5432/'+
 #read the datafram from postreSQL table
 df_bike= pd.read_sql_table ('bike_stalls',engine)
 df_stations = pd.read_sql_table('stations',engine)
+# now time and day
+hour_now = time.strftime("%H")
+day_now = date.today().strftime("%m-%d")
+now = "2010-"+day_now+" "+hour_now+":00:00"
+for i in range(0,7):
+    start_week=datetime.datetime.strptime(now, '%Y-%m-%d %H:00:00') - timedelta(days=i) 
+    start_week=str(start_week)
+    
+if date.today().strftime("%m") in [ "04" ,"06" ,"09" ,"10"]:
+    for i in range(0,30):
+        start_month= datetime.datetime.strptime(now, '%Y-%m-%d %H:00:00') - timedelta(days=i) 
+        start_month=str(start_month)
+elif date.today("m") == "02":
+    for i in range(0,28) :
+        start_month=datetime.datetime.strptime(now, '%Y-%m-%d %H:00:00') - timedelta(days=i) 
+        start_month=str(start_month)
+else:    
+    for i in range(0,31) :
+        start_month=datetime.datetime.strptime(now, '%Y-%m-%d %H:00:00') - timedelta(days=i)
+        start_month=str(start_month)
+
+for index, row in df_bike.iterrows():
+    if row.time == now:
+        end=index
+        break
+for index, row in df_bike.iterrows():
+    if row.time ==  start_week :
+        start=index
+        break   
+previous_week=df_bike.loc[start:end]
+previous_week.index= pd.to_datetime (previous_week['time'])
+previous_week['1'].plot
+previous_week=previous_week.drop('time', axis=1)
+
+for index, row in df_bike.iterrows():
+    if row.time == start_month :
+        start_month_ind=index
+        break  
+previous_month=df_bike.loc[start_month_ind:end]
+previous_month.index= pd.to_datetime (previous_month['time'])
+previous_month['1'].plot
+previous_month=previous_month.drop('time', axis=1)
 
 #reindex the dataframe on a time index object using the date 
 df_bike.index= pd.to_datetime (df_bike['time'])
@@ -382,7 +427,94 @@ labels = LabelSet(x='x', y='y', text='ID', text_color='blue',
 p1.add_layout(labels)
 #g1= gridplot([tab,p1], ncols=2, toolbar_location="right")
 g1_panel = Panel(child=p1, title='Map')
-tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel,g1_panel])		  
+
+'''REAL TIME PLOTS'''
+#Stations bikes availability during previous week
+date_7= list(previous_week.index)
+data_7 = ColumnDataSource({ 'x': date_7, 'y':  list(previous_week['1'])}) 
+
+TOOLTIPS = [
+    ("No.bikes", "@y")
+    ("Date", "@x")
+]
+p7 = figure(title="Bikes availability real time data previous week", tooltips=TOOLTIPS)
+p7.line('x', 'y', source = data_7, color = 'orange',line_width=2)
+
+
+p7.background_fill_color = "#FDEBD0"
+p7.xaxis.axis_label = "Date"
+p7.xaxis.axis_label_text_color = "#FD6400"
+p7.xaxis.major_label_text_color = "#FD6400"
+p7.yaxis.axis_label = "Number of bikes"
+p7.yaxis.axis_label_text_color = "#FD6400"
+p7.yaxis.major_label_text_color = "#FD6400"
+p7.yaxis.major_label_orientation = "vertical"
+
+p7.title.align = "center"
+p7.title.text_color = "#FD6400"
+p7.title.background_fill_color = "#FEB280"    
+
+p7_widget = Select(options= options_1, value= options_1[0], width=150,
+                title = 'Select a station',background= '#FDEBD0')
+
+#callback needed to upload the graph
+def callback7(attr, old, new):
+    column7plot = p7_widget.value
+    if int(column7plot[-2:]) > 9:
+        num = column7plot[-2:]
+    else:
+        num = column7plot[-1:]
+    data_7.data = {'x' : date_7, 'y': list(previous_week[num])}
+    p6.line('x', 'y', source = data_7, color = 'orange',line_width=2)
+
+p7_widget.on_change('value', callback7)
+g7= gridplot([p7_widget, p7], ncols=2, plot_height=400,toolbar_location="right")
+g7_panel = Panel(child=g7, title='Real time data previous week')
+
+#Stations bikes availability during previous month
+date_8= list(previous_month.index)
+data_8 = ColumnDataSource({ 'x': date_8, 'y':  list(previous_month['1'])}) 
+
+TOOLTIPS = [
+    ("No.bikes", "@y")
+    ("Date", "@x")
+]
+p8 = figure(title="Bikes availability real time data previous month", tooltips=TOOLTIPS)
+p8.line('x', 'y', source = data_7, color = 'orange',line_width=2)
+
+
+p8.background_fill_color = "#FDEBD0"
+p8.xaxis.axis_label = "Date"
+p8.xaxis.axis_label_text_color = "#FD6400"
+p8.xaxis.major_label_text_color = "#FD6400"
+p8.yaxis.axis_label = "Number of bikes"
+p8.yaxis.axis_label_text_color = "#FD6400"
+p8.yaxis.major_label_text_color = "#FD6400"
+p8.yaxis.major_label_orientation = "vertical"
+
+p8.title.align = "center"
+p8.title.text_color = "#FD6400"
+p8.title.background_fill_color = "#FEB280"    
+
+p8_widget = Select(options= options_1, value= options_1[0], width=150,
+                title = 'Select a station',background= '#FDEBD0')
+
+#callback needed to upload the graph
+def callback8(attr, old, new):
+    column8plot = p8_widget.value
+    if int(column8plot[-2:]) > 9:
+        num = column8plot[-2:]
+    else:
+        num = column8plot[-1:]
+    data_8.data = {'x' : date_8, 'y': list(previous_month[num])}
+    p8.line('x', 'y', source = data_8, color = 'orange',line_width=2)
+
+p8_widget.on_change('value', callback8)
+g8= gridplot([p8_widget, p8], ncols=2, plot_height=400,toolbar_location="right")
+g8_panel = Panel(child=g8, title='Real time data previous month')
+
+
+tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel,g1_panel,g7_panel,g8_panel])		  
 layout=(tab)
 #Output the plot
 output_file("templates/stat_bikes.html")
