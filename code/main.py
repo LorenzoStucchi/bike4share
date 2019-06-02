@@ -13,6 +13,7 @@ import os
 import downloadStation
 import realtime_data
 from post import mail_sender
+from createSchema import psw_rec_generator
 
 # Create the application instance
 app = Flask(__name__, template_folder="templates")
@@ -215,14 +216,10 @@ def forgotpassword():
             cur.close()
         
        if error is None:
-            conn = get_dbConn()
-            cur = conn.cursor()
-            cur.execute(
-            'SELECT user_password FROM user_bike WHERE user_mail = %s', (mail_lostp,))
-            rec_password = cur.fetchone()
-           
-            mail_sender(mail_lostp,rec_password)
-            error = 'Email is sent to {} check in your inbox or SPAM folder'.format(mail_lostp)
+             rec_password=psw_rec_generator()
+             print('the secret psw is',(rec_password,) )
+             mail_sender(mail_lostp,rec_password)
+             error = 'Email is sent to {} check in your inbox or SPAM folder'.format(mail_lostp)
         
        flash(error)
    return render_template('auth/forgotpassword.html')

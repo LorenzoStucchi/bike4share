@@ -6,7 +6,9 @@ from sqlalchemy import create_engine
 #SQL Command
 cleanup = (
         'DROP TABLE IF EXISTS user_bike CASCADE',
+        'DROP TABLE IF EXISTS password_recovery CASCADE',
         'DROP TABLE IF EXISTS key_list CASCADE'
+        
         )
 
 commands = (
@@ -14,6 +16,13 @@ commands = (
         CREATE TABLE key_list (
             id_key SERIAL PRIMARY KEY,
             secret_key VARCHAR(35) UNIQUE NOT NULL
+        )
+        """,
+        
+          """
+        CREATE TABLE password_recovery (
+            id_psw SERIAL PRIMARY KEY,
+            psw_recovery VARCHAR(35) UNIQUE NOT NULL
         )
         """,
 
@@ -39,6 +48,17 @@ def key_generator():
         psw += arr[int(random.randrange(len(arr)))]
         x += 1
     return psw
+
+#PASSWORD RECOVERY GENERATOR
+def psw_rec_generator():
+    arr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    leng = 10
+    psw_sent = ""
+    x = 0
+    for x in range(int(leng)):
+        psw_sent += arr[int(random.randrange(len(arr)))]
+        x += 1
+    return psw_sent
         
 # Main   
 # Access to database
@@ -66,6 +86,18 @@ for i in range (20):
 print('Added secret key')
 # Save secret key into a txt file
 s_k.to_csv('secret_key.txt', header=None, index=None, sep='\n')
+
+# Fill the psw_recovery table
+
+p_r = pd.DataFrame({"psw"})
+rec_key = psw_rec_generator()
+cur.execute('INSERT INTO password_recovery (psw_recovery) VALUES (%s)', (rec_key,))
+p_r.loc[i] = [rec_key]    
+print('Added secret psw', (rec_key,))
+## Save psw_recovery into a txt file
+p_r.to_csv('psw_recovery.txt', header=None, index=None, sep='\n')
+
+
 # Create engine for import dataframe
 db_url = 'postgresql://'+username+':'+password+'@localhost:5432/'+dbname
 engine = create_engine(db_url)
