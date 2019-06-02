@@ -98,7 +98,7 @@ function onLocationFound(e) {
     L.circle(e.latlng, rad).addTo(mymap);
     var layer = position;
     var nearest = leafletKnn(stat).nearest(e.latlng, 5, 10000*1.61);
-    //console.log(nearest)
+    console.log(nearest[0].layer)
     list_station(nearest)                   
 }
 
@@ -118,10 +118,14 @@ mymap.on('locationerror', onLocationError);
 function list_station(l){
     $('#nearest_stalls').html(
         "<p>"+ "<b>List of nearest stations</b>: <br><br>" + 
-            l[0].layer._popup._content + "<br><br>"
-            + l[1].layer._popup._content + "<br><br>"
-            + l[2].layer._popup._content + "<br><br>"
-            + l[3].layer._popup._content + "<br><br>"
+            l[0].layer._popup._content 
+            + "<br><br>"
+            + l[1].layer._popup._content 
+            + "<br><br>"
+            + l[2].layer._popup._content 
+            + "<br><br>"
+            + l[3].layer._popup._content 
+            + "<br><br>"
             + l[4].layer._popup._content +
         "</p>" 
     )
