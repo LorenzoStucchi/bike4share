@@ -215,7 +215,13 @@ def forgotpassword():
             cur.close()
         
        if error is None:
-            mail_sender(mail_lostp)
+            conn = get_dbConn()
+            cur = conn.cursor()
+            cur.execute(
+            'SELECT user_password FROM user_bike WHERE user_mail = %s', (mail_lostp,))
+            rec_password = cur.fetchone()
+           
+            mail_sender(mail_lostp,rec_password)
             error = 'Email is sent to {} check in your inbox or SPAM folder'.format(mail_lostp)
         
        flash(error)
