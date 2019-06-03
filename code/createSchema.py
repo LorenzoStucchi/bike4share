@@ -87,13 +87,6 @@ print('Added secret key')
 # Save secret key into a txt file
 s_k.to_csv('secret_key.txt', header=None, index=None, sep='\n')
 
-# Fill the psw_recovery table
-
-#p_r = pd.DataFrame({"psw"})
-#rec_key = psw_rec_generator()
-#cur.execute('INSERT INTO password_recovery (psw_recovery) VALUES (%s)', (rec_key,))  
-#print('Added secret psw', (rec_key,))
-
 # Create engine for import dataframe
 db_url = 'postgresql://'+username+':'+password+'@localhost:5432/'+dbname
 engine = create_engine(db_url)
