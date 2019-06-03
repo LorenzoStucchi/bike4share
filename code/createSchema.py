@@ -22,7 +22,8 @@ commands = (
           """
         CREATE TABLE password_recovery (
             id_psw SERIAL PRIMARY KEY,
-            psw_recovery VARCHAR(35) UNIQUE NOT NULL
+            psw_recovery VARCHAR(11) UNIQUE NOT NULL,
+            user_name VARCHAR(255) UNIQUE NOT NULL
         )
         """,
 
@@ -55,7 +56,7 @@ for command in cleanup :
 # Create new tables
 for command in commands :
     cur.execute(command)
-print('created tables')
+print('Created tables')
 # Fill the secret_key table
 s_k = pd.DataFrame({"key"})
 for i in range (20):

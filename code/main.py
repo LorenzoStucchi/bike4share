@@ -11,7 +11,7 @@ import platform
 import os
 
 import downloadStation
-# import realtime_data
+import realtime_data
 from func import ( mail_sender , key_generator)
 
 
@@ -200,26 +200,32 @@ def login():
 #FORGOT PASSWORD: it allows to recovery the forgotten password
 @app.route('/forgotpassword', methods=('GET', 'POST'))
 def forgotpassword():
+    load_logged_in_user()
     if request.method == 'POST':
         mail_lostp = request.form['user_mail']
+        username  = request.form['username']
         error = None
         if not mail_lostp:
             error = 'E-mail is required for the Password Recovery'
+        elif not username:
+            error = 'Username is required for the Password Recovery'
         else :
             conn = get_dbConn()
             cur = conn.cursor()
             cur.execute(
-            'SELECT user_mail FROM user_bike WHERE user_mail = %s', (mail_lostp,))
+            'SELECT * FROM user_bike WHERE user_mail = %s', (mail_lostp,))
             user = cur.fetchone()
             if user is None:
                 error = 'E-mail {} is not present, please check it or make the registration procedure again'.format(mail_lostp)
+            elif user[1] != username:
+                error = 'This mail is not associated with this username'
             cur.close()
         
         if error is None:
             rec_password=key_generator(10)
             conn = get_dbConn()
             cur = conn.cursor()
-            cur.execute('INSERT INTO password_recovery (psw_recovery) VALUES (%s)', (rec_password,))
+            cur.execute('INSERT INTO password_recovery (psw_recovery, user_name) VALUES (%s, %s)', (rec_password, username))
             cur.close()
             conn.commit()        
             mail_sender(mail_lostp,rec_password)
@@ -253,6 +259,8 @@ def set_new_password():
             error = 'Username is required.'
         elif not new_password:
             error = 'New password is required.'
+        elif p_r[2] != username:
+            error = 'This code is not associated with this username'
            
         if error is None:
             conn = get_dbConn()
@@ -264,7 +272,7 @@ def set_new_password():
                 'DELETE FROM password_recovery WHERE psw_recovery = %s',(given_code,))
             cur.close()
             conn.commit()
-            error = "new password is been set!"
+            error = "New password is been set!"
             return redirect(url_for('login'))
 
         flash(error)

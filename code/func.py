@@ -4,7 +4,7 @@ def mail_sender(send_mail_to,rec_password):
     print('Added secret psw for recovery password', (rec_password,))
     rec_password= ''.join(rec_password)
     object= "Subject:bike4share Password Recovery!\n\n"
-    content="Hello there! Here you can find the code for the bike4share recovery password:" 
+    content="Hello there! Here you can find the code for the bike4share recovery password: \n" 
     message= object + content + rec_password
     email = smtplib.SMTP("smtp.gmail.com",587)
     email.ehlo()
