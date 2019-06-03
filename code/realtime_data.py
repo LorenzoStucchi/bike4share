@@ -43,6 +43,8 @@ stalls_free = stalls_free.fillna(999)
 
 stations.insert(0, 'free', stalls_free) 
 
+print('Realtime data downloaded')
+
 name_file = 'stalls_free'   
 url = 'static/'+name_file+'.geojson'
 
@@ -66,3 +68,5 @@ with open(url,"r+") as f:
     features = f.read()
     f.seek(0)
     f.write("var "+name_file+" = ["+features+"];")
+
+print('Realtime data saved locally')

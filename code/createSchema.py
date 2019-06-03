@@ -1,7 +1,7 @@
-import random
 import pandas as pd
 from psycopg2 import connect
 from sqlalchemy import create_engine
+from func import key_generator
 
 #SQL Command
 cleanup = (
@@ -22,7 +22,6 @@ commands = (
           """
         CREATE TABLE password_recovery (
             id_psw SERIAL PRIMARY KEY,
-            
             psw_recovery VARCHAR(35) UNIQUE NOT NULL
         )
         """,
@@ -38,28 +37,7 @@ commands = (
         )
         
         """)   
- 
-#KEY GENERATOR
-def key_generator():
-    arr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!£$%&/()=?^"
-    leng = 34
-    psw = ""
-    x = 0
-    for x in range(int(leng)):
-        psw += arr[int(random.randrange(len(arr)))]
-        x += 1
-    return psw
 
-#PASSWORD RECOVERY GENERATOR
-def psw_rec_generator():
-    arr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    leng = 10
-    psw_sent = ""
-    x = 0
-    for x in range(int(leng)):
-        psw_sent += arr[int(random.randrange(len(arr)))]
-        x += 1
-    return psw_sent
         
 # Main   
 # Access to database
@@ -81,17 +59,12 @@ print('created tables')
 # Fill the secret_key table
 s_k = pd.DataFrame({"key"})
 for i in range (20):
-    secr_key = key_generator()
+    secr_key = key_generator(34)
     cur.execute('INSERT INTO key_list (secret_key) VALUES (%s)', (secr_key,))
     s_k.loc[i] = [secr_key]    
 print('Added secret key')
 # Save secret key into a txt file
 s_k.to_csv('secret_key.txt', header=None, index=None, sep='\n')
-# Fill the psw_recovery table
-#p_r = pd.DataFrame({"password_recovery"})
-#psw_rec = psw_rec_generator()
-#cur.execute('INSERT INTO password_recovery (psw_recovery) VALUES (%s)', (psw_rec,))        
-#print('Added recovery psw')
 # Create engine for import dataframe
 db_url = 'postgresql://'+username+':'+password+'@localhost:5432/'+dbname
 engine = create_engine(db_url)

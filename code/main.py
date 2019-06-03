@@ -11,9 +11,8 @@ import platform
 import os
 
 import downloadStation
-#import realtime_data
-from post import mail_sender
-from createSchema import psw_rec_generator
+# import realtime_data
+from func import ( mail_sender , key_generator)
 
 
 # Create the application instance
@@ -201,12 +200,12 @@ def login():
 #FORGOT PASSWORD: it allows to recovery the forgotten password
 @app.route('/forgotpassword', methods=('GET', 'POST'))
 def forgotpassword():
-   if request.method == 'POST':
-       mail_lostp = request.form['user_mail']
-       error = None
-       if not mail_lostp:
-           error = 'E-mail is required for the Password Recovery'
-       else :
+    if request.method == 'POST':
+        mail_lostp = request.form['user_mail']
+        error = None
+        if not mail_lostp:
+            error = 'E-mail is required for the Password Recovery'
+        else :
             conn = get_dbConn()
             cur = conn.cursor()
             cur.execute(
@@ -216,63 +215,61 @@ def forgotpassword():
                 error = 'E-mail {} is not present, please check it or make the registration procedure again'.format(mail_lostp)
             cur.close()
         
-       if error is None:
-              
-             rec_password=psw_rec_generator()             
-             print('the secret psw is',(rec_password,) )
-             mail_sender(mail_lostp,rec_password)
-             error = 'Email is sent to {} check in your inbox or SPAM folder'.format(mail_lostp)
-             return render_template('auth/set_new_password.html')
-       flash(error)
-   return render_template('auth/forgotpassword.html')
+        if error is None:
+            rec_password=key_generator(10)
+            conn = get_dbConn()
+            cur = conn.cursor()
+            cur.execute('INSERT INTO password_recovery (psw_recovery) VALUES (%s)', (rec_password,))
+            cur.close()
+            conn.commit()        
+            mail_sender(mail_lostp,rec_password)
+            error = 'Email is sent to {} check in your inbox or SPAM folder'.format(mail_lostp)
+            flash(error)
+            return redirect(url_for('set_new_password'))
+        flash(error)
+    return render_template('auth/forgotpassword.html')
 
-#@app.route('/set_new_password', methods=('GET', 'POST'))
-#def set_new_password():
-#    load_logged_in_user()
-#    if request.method =='POST':
-#        given_code = request.form['given_code']
-#        username = request.form['username']
-#        new_password = request.form['new_password']
-#        conn = get_dbConn()
-#        cur = conn.cursor()
-#        error = None
-#        cur.execute(
-#            'SELECT * FROM password_recovery WHERE psw_recovery = %s', (given_code,)
-#        )
-#        p_r = cur.fetchone()
-#        cur.close()
-#        conn.commit()
-#        
-#        if p_r is None:
-#            error = ' Incorrect secret recovery code, Please follow the Forgot Password procedure to obtain it.'
-#            flash(error)
-#        elif not username:
-#            error = 'Username is required.'
-#        elif not new_password:
-#            error = 'New password is required.'
-#            
-#        else :
-#            conn = get_dbConn()
-#            cur = conn.cursor()
-#            cur.execute(
-#            'SELECT user_id FROM user_bike WHERE user_name = %s', (username,))
-#            
-#        
-#        if error is None:
-#            conn = get_dbConn()
-#            cur = conn.cursor()                        
-#            cur.execute(                    
-#                'INSERT INTO user_bike (user_name, user_password)  VALUES (%s,%s)' , (username, new_password,))
-#            cur.execute(
-#                'DELETE FROM password_recovery WHERE psw_recovery = %s',(given_code,))
-#            cur.close()
-#            conn.commit()
-#            error = "new password is been set!"
-#            return redirect(url_for('login'))
-#
-#        flash(error)
-#        
-#    return render_template('auth/forgotpassword.html')
+@app.route('/set_new_password', methods=('GET', 'POST'))
+def set_new_password():
+    load_logged_in_user()
+    if request.method =='POST':
+        given_code = request.form['given_code']
+        username = request.form['username']
+        new_password = request.form['new_password']
+        conn = get_dbConn()
+        cur = conn.cursor()
+        error = None
+        cur.execute(
+           'SELECT * FROM password_recovery WHERE psw_recovery = %s', (given_code,)
+        )
+        p_r = cur.fetchone()
+        cur.close()
+        conn.commit()
+       
+        if p_r is None:
+            error = ' Incorrect secret recovery code, Please follow the Forgot Password procedure to obtain it.'
+            flash(error)
+        elif not username:
+            error = 'Username is required.'
+        elif not new_password:
+            error = 'New password is required.'
+           
+        if error is None:
+            conn = get_dbConn()
+            cur = conn.cursor()                       
+            cur.execute(                    
+                'UPDATE user_bike SET user_password = %s WHERE user_name = %s' , 
+                (generate_password_hash(new_password), username))
+            cur.execute(
+                'DELETE FROM password_recovery WHERE psw_recovery = %s',(given_code,))
+            cur.close()
+            conn.commit()
+            error = "new password is been set!"
+            return redirect(url_for('login'))
+
+        flash(error)
+       
+    return render_template('auth/set_new_password.html')
         
 
 @app.route('/logout')

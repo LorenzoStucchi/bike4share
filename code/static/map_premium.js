@@ -97,7 +97,7 @@ function onLocationFound(e) {
     }).addTo(mymap);
     L.circle(e.latlng, rad).addTo(mymap);
     var layer = position;
-    var nearest = leafletKnn(stat).nearest(e.latlng, 5, 10000*1.61);
+    var nearest = leafletKnn(stat).nearest(e.latlng, 5);
     console.log(nearest[0].layer)
     list_station(nearest)                   
 }
