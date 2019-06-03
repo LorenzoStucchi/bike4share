@@ -22,6 +22,7 @@ commands = (
           """
         CREATE TABLE password_recovery (
             id_psw SERIAL PRIMARY KEY,
+            
             psw_recovery VARCHAR(35) UNIQUE NOT NULL
         )
         """,
@@ -86,7 +87,11 @@ for i in range (20):
 print('Added secret key')
 # Save secret key into a txt file
 s_k.to_csv('secret_key.txt', header=None, index=None, sep='\n')
-
+# Fill the psw_recovery table
+#p_r = pd.DataFrame({"password_recovery"})
+#psw_rec = psw_rec_generator()
+#cur.execute('INSERT INTO password_recovery (psw_recovery) VALUES (%s)', (psw_rec,))        
+#print('Added recovery psw')
 # Create engine for import dataframe
 db_url = 'postgresql://'+username+':'+password+'@localhost:5432/'+dbname
 engine = create_engine(db_url)

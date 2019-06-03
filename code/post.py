@@ -13,3 +13,5 @@ def mail_sender(send_mail_to,rec_password):
     email.login("bike4sharepolimi@gmail.com","safelollobike4share")
     email.sendmail("bike4sharepolimi@gmail.com",send_mail_to, message)
     email.quit()
+    
+    

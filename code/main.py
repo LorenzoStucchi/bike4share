@@ -218,11 +218,11 @@ def forgotpassword():
         
        if error is None:
               
-             rec_password=psw_rec_generator()
+             rec_password=psw_rec_generator()             
              print('the secret psw is',(rec_password,) )
              mail_sender(mail_lostp,rec_password)
              error = 'Email is sent to {} check in your inbox or SPAM folder'.format(mail_lostp)
-        
+             return render_template('auth/set_new_password.html')
        flash(error)
    return render_template('auth/forgotpassword.html')
 
@@ -230,7 +230,7 @@ def forgotpassword():
 #def set_new_password():
 #    load_logged_in_user()
 #    if request.method =='POST':
-#        given_code = request.form['psw_recovery']
+#        given_code = request.form['given_code']
 #        username = request.form['username']
 #        new_password = request.form['new_password']
 #        conn = get_dbConn()
@@ -244,7 +244,7 @@ def forgotpassword():
 #        conn.commit()
 #        
 #        if p_r is None:
-#            error = ' Incorrect secret key, Please follow the Forgot Password procedure to obtain it.'
+#            error = ' Incorrect secret recovery code, Please follow the Forgot Password procedure to obtain it.'
 #            flash(error)
 #        elif not username:
 #            error = 'Username is required.'
@@ -264,7 +264,7 @@ def forgotpassword():
 #            cur.execute(                    
 #                'INSERT INTO user_bike (user_name, user_password)  VALUES (%s,%s)' , (username, new_password,))
 #            cur.execute(
-#                'DELETE FROM password_recovery WHERE psw_recovery = %s',(given_code,)
+#                'DELETE FROM password_recovery WHERE psw_recovery = %s',(given_code,))
 #            cur.close()
 #            conn.commit()
 #            error = "new password is been set!"
