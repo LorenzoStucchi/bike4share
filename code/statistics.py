@@ -8,7 +8,7 @@ import geopandas as gpd
 from sqlalchemy import create_engine
 from psycopg2 import connect
 from bokeh.plotting import figure, show, output_file
-from bokeh.models import ColumnDataSource, Select, FuncTickFormatter, LabelSet
+from bokeh.models import ColumnDataSource, Select, FuncTickFormatter, LabelSet,DatetimeTickFormatter
 from bokeh.io import curdoc
 from bokeh.layouts import row,gridplot,column
 from bokeh.models.widgets import Panel, Tabs
@@ -18,6 +18,8 @@ import time
 from datetime import date,timedelta
 import geojson
 import datetime
+
+
 
 # Access to database
 myFile = open('dbConfig.txt')
@@ -425,7 +427,6 @@ p1.circle('x', 'y', source=psource, color='blue', radius=40) #size=10
 labels = LabelSet(x='x', y='y', text='ID', text_color='blue',
               x_offset=5, y_offset=5, source=psource,render_mode='canvas')
 p1.add_layout(labels)
-#g1= gridplot([tab,p1], ncols=2, toolbar_location="right")
 g1_panel = Panel(child=p1, title='Map')
 
 '''REAL TIME PLOTS'''
@@ -435,27 +436,32 @@ data_7 = ColumnDataSource({ 'x': date_7, 'y':  list(previous_week['1'])})
 
 TOOLTIPS = [
     ("No.bikes", "@y")
-    ("Date", "@x")
 ]
+
 p7 = figure(title="Bikes availability real time data previous week", tooltips=TOOLTIPS)
-p7.line('x', 'y', source = data_7, color = 'orange',line_width=2)
+p7.line('x', 'y', source = data_7, color = 'green',line_width=2)
+p7.xaxis.formatter=DatetimeTickFormatter(
+        hours=["%d %B %Y"],
+        days=["%d %B %Y"],
+        months=["%d %B %Y"],
+        years=["%d %B %Y"],
+    )
 
-
-p7.background_fill_color = "#FDEBD0"
+p7.background_fill_color = "#ADFCA2"
 p7.xaxis.axis_label = "Date"
-p7.xaxis.axis_label_text_color = "#FD6400"
-p7.xaxis.major_label_text_color = "#FD6400"
+p7.xaxis.axis_label_text_color = "#17AA02"
+p7.xaxis.major_label_text_color = "#17AA02"
 p7.yaxis.axis_label = "Number of bikes"
-p7.yaxis.axis_label_text_color = "#FD6400"
-p7.yaxis.major_label_text_color = "#FD6400"
+p7.yaxis.axis_label_text_color = "#17AA02"
+p7.yaxis.major_label_text_color = "#17AA02"
 p7.yaxis.major_label_orientation = "vertical"
 
 p7.title.align = "center"
-p7.title.text_color = "#FD6400"
-p7.title.background_fill_color = "#FEB280"    
+p7.title.text_color = "#17AA02"
+p7.title.background_fill_color = "#A8FF33"    
 
 p7_widget = Select(options= options_1, value= options_1[0], width=150,
-                title = 'Select a station',background= '#FDEBD0')
+                title = 'Select a station',background= '#ADFCA2')
 
 #callback needed to upload the graph
 def callback7(attr, old, new):
@@ -465,7 +471,7 @@ def callback7(attr, old, new):
     else:
         num = column7plot[-1:]
     data_7.data = {'x' : date_7, 'y': list(previous_week[num])}
-    p6.line('x', 'y', source = data_7, color = 'orange',line_width=2)
+    p6.line('x', 'y', source = data_7, color = 'green',line_width=2)
 
 p7_widget.on_change('value', callback7)
 g7= gridplot([p7_widget, p7], ncols=2, plot_height=400,toolbar_location="right")
@@ -477,27 +483,32 @@ data_8 = ColumnDataSource({ 'x': date_8, 'y':  list(previous_month['1'])})
 
 TOOLTIPS = [
     ("No.bikes", "@y")
-    ("Date", "@x")
 ]
 p8 = figure(title="Bikes availability real time data previous month", tooltips=TOOLTIPS)
-p8.line('x', 'y', source = data_7, color = 'orange',line_width=2)
+p8.line('x', 'y', source = data_8, color = 'green',line_width=2)
+p8.xaxis.formatter=DatetimeTickFormatter(
+        hours=["%d %B %Y"],
+        days=["%d %B %Y"],
+        months=["%d %B %Y"],
+        years=["%d %B %Y"],
+    )
 
 
-p8.background_fill_color = "#FDEBD0"
+p8.background_fill_color = "#ADFCA2"
 p8.xaxis.axis_label = "Date"
-p8.xaxis.axis_label_text_color = "#FD6400"
-p8.xaxis.major_label_text_color = "#FD6400"
+p8.xaxis.axis_label_text_color = "#17AA02"
+p8.xaxis.major_label_text_color = "#17AA02"
 p8.yaxis.axis_label = "Number of bikes"
-p8.yaxis.axis_label_text_color = "#FD6400"
-p8.yaxis.major_label_text_color = "#FD6400"
+p8.yaxis.axis_label_text_color = "#17AA02"
+p8.yaxis.major_label_text_color = "#17AA02"
 p8.yaxis.major_label_orientation = "vertical"
 
 p8.title.align = "center"
-p8.title.text_color = "#FD6400"
-p8.title.background_fill_color = "#FEB280"    
+p8.title.text_color = "#17AA02"
+p8.title.background_fill_color = "#A8FF33"    
 
 p8_widget = Select(options= options_1, value= options_1[0], width=150,
-                title = 'Select a station',background= '#FDEBD0')
+                title = 'Select a station',background= '#ADFCA2')
 
 #callback needed to upload the graph
 def callback8(attr, old, new):
@@ -507,14 +518,15 @@ def callback8(attr, old, new):
     else:
         num = column8plot[-1:]
     data_8.data = {'x' : date_8, 'y': list(previous_month[num])}
-    p8.line('x', 'y', source = data_8, color = 'orange',line_width=2)
+    p8.line('x', 'y', source = data_8, color = 'green',line_width=2)
+
 
 p8_widget.on_change('value', callback8)
 g8= gridplot([p8_widget, p8], ncols=2, plot_height=400,toolbar_location="right")
 g8_panel = Panel(child=g8, title='Real time data previous month')
 
 
-tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel,g1_panel,g7_panel,g8_panel])		  
+tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel,g7_panel,g8_panel,g1_panel])		  
 layout=(tab)
 #Output the plot
 output_file("templates/stat_bikes.html")
