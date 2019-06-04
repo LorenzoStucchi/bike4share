@@ -1,18 +1,36 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Log In{% endblock %}</h1>
+<h1>{% block title %}Login{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Log In">
-  </form>
-  <p>
-    <a href="/forgotpassword">Forgot Password</a>
-  </p>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+<form method="post">
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+  	<div class="fadeIn first">
+      <img class="resize" src="/static/login.png" />
+
+    </div>
+
+    <!-- Login Form -->
+    <form>
+     <br><br><label for="username">Username</label><br><br>
+     <input name="username" class="fadeIn second" id="username" placeholder="username" required><br><br>
+     <label for="password">Password</label><br><br>
+     <input type="password" class="fadeIn third" name="password" id="password" placeholder="password" required><br><br>
+     <input type="submit" class="fadeIn fourht" value="Log In">
+     </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="/forgotpassword" target="_blank">Forgot Password</a>
+    </div>
+
+  </div>
+
+
+
 {% endblock %}
