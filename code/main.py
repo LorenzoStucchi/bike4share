@@ -90,11 +90,15 @@ def register():
             conn = get_dbConn()
             cur = conn.cursor()
             cur.execute(
-            'SELECT user_id FROM user_bike WHERE user_name = %s', (username,))
-            if cur.fetchone() is not None:
-                error = 'User {} is already registered, please change your username'.format(username)
+            'SELECT user_name,user_mail FROM user_bike WHERE user_name = %s OR user_mail=%s', (username,user_mail,))
+            
+            check = cur.fetchone()
+            if check[0]==username:
+                error = 'User {} is already registered, please change your username'.format(username) 
+            elif check[1] == user_mail:
+                error = 'E-mail {} is already used, please change your E-mail'.format(user_mail)
                 cur.close()
-
+            
         if error is None:
             conn = get_dbConn()
             cur = conn.cursor()
@@ -143,9 +147,13 @@ def tec_reg():
             conn = get_dbConn()
             cur = conn.cursor()
             cur.execute(
-            'SELECT user_id FROM user_bike WHERE user_name = %s', (username,))
-            if cur.fetchone() is not None:
-                error = 'User {} is already registered.'.format(username)
+            'SELECT user_name,user_mail FROM user_bike WHERE user_name = %s OR user_mail=%s', (username,user_mail,))
+            
+            check = cur.fetchone()
+            if check[0]==username:
+                error = 'User {} is already registered, please change your username'.format(username) 
+            elif check[1] == user_mail:
+                error = 'E-mail {} is already used, please change your E-mail'.format(user_mail)
                 cur.close()
         
         if error is None:
