@@ -99,10 +99,6 @@ bike_months_tot = df_bike.groupby('month', axis=0).sum()
 bike_months_tot=bike_months_tot.drop('day', axis=1)
 bikes_weekend=bike_days_med.drop(bike_days_med.index[[0,1,2,3]])
 
-percentage=bike_months_med
-stalls=pd.DataFrame(df_stations['STALLI']).T
-
-
 #Create Select Widget menu options with the list of all the stations
 station_names = list(df_bike)
 del station_names[0]
