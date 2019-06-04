@@ -26,8 +26,10 @@ h2 {
 }
 
 style{
+  background-color: powderblue;
   background-position: 50% 50%;
   background-repeat: repeat;
+
 }
 h1 { font-family: serif; color: #377ba8; margin: 1rem 0; }
 nav { background: #56baed ; display: flex; align-items: center; padding: 0 0.5rem; }
