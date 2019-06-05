@@ -1,31 +1,6 @@
 <!doctype html>
-<title> </title>
-<style>
-* {
-  box-sizing: border-box;
-}
-
-/* Create two unequal columns that floats next to each other */
-.column {
-  float: left;
-  padding: 10px;
-}
-
-.left {
-  width: 85%;
-}
-
-.right {
-  width: 15%;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-</style>
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <nav>
   <h1><a href="/index">bike4share</a></h1>
 
@@ -44,10 +19,8 @@
     {% endif %}
   </ul>
 </nav>
-<div class="row">
-  <div class="left" >
-    <!-- style="background-image:url(/static/milan.jpg);background-size: cover" -->
-<body>
+
+<body style="background-image:url(/static/back.jpg);background-size: cover">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
       crossorigin=""/>
@@ -68,11 +41,7 @@
     <div class = "flash">{{ message }}</div>
   {% endfor %}
   {% block content %}{% endblock %}
-</section></div>
- <div class="right"><h2>Column 1</h2>
-    <p>Some text..</p></div>
- 
- </div>
-
+</section>
 
 </body>
+

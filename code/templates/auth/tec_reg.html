@@ -5,15 +5,22 @@
 {% endblock %}
 
 {% block content %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
   <form method="post">
-    <label for="secret_code">Insert the secret code</label>
-    <input type="secret_code" name="secret_code" id="secret_code" required>
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <label for="email"><b>Email</b></label>
-    <input type="email" name="user_mail" id="user_mail" required>
-    <input type="submit" value="Register">
+        <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <br><div class="fadeIn first"></div>
+
+
+      <img class="resize" src="/static/reg.png" />
+    <br><label for="secret_code">Insert the secret code</label><br>
+    <input type="secret_code" class="fadeIn second" name="secret_code" id="secret_code" required><br>
+    <label for="username">Username</label><br><br>
+    <input name="username" class="fadeIn second" id="username" required><br>
+    <label for="password">Password</label><br>
+    <input type="password" class="fadeIn third" name="password" id="password" required><br>
+    <label for="email"><b>Email</b></label><br>
+    <input type="email" class="fadeIn fourth" name="user_mail" id="user_mail" required><br>
+    <input type="submit" value="Register"><br>
   </form>
 {% endblock %}
