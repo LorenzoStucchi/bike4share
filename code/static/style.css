@@ -83,5 +83,5 @@ input[type=submit] { align-self: start; min-width: 10em; }
 
 #map { height: 500px; }
 #premium {width: 100%; overflow: hidden}
-#map_premium { height: 500px; width: 590px; float: left; }
-#nearest_stalls {height: 500px; width: 360px; margin-left: 600px;}
+#map_premium { height: 500px; width: 650px; float: left; }
+#nearest_stalls {height: 500px; width: 280px; margin-left: 600px;}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Techinician registration{% endblock %}</h1>
+  <h1 class="fadeIn fourth" style="text-align: center">{% block title %}Technician Registration{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -13,14 +13,14 @@
 
 
       <img class="resize" src="/static/reg.png" />
-    <br><label for="secret_code">Insert the secret code</label><br>
-    <input type="secret_code" class="fadeIn second" name="secret_code" id="secret_code" required><br>
+    <br><br><label for="secret_code">Insert the secret code</label><br><br>
+    <input type="secret_code" class="fadeIn second" name="secret_code" id="secret_code" required><br><br>
     <label for="username">Username</label><br><br>
-    <input name="username" class="fadeIn second" id="username" required><br>
-    <label for="password">Password</label><br>
-    <input type="password" class="fadeIn third" name="password" id="password" required><br>
-    <label for="email"><b>Email</b></label><br>
-    <input type="email" class="fadeIn fourth" name="user_mail" id="user_mail" required><br>
+    <input name="username" class="fadeIn second" id="username" required><br><br>
+    <label for="password">Password</label><br><br>
+    <input type="password" class="fadeIn third" name="password" id="password" required><br><br>
+    <label for="email">Email</label><br><br>
+    <input type="email" class="fadeIn fourth" name="user_mail" id="user_mail" required><br><br>
     <input type="submit" value="Register"><br>
   </form>
 {% endblock %}

@@ -117,15 +117,15 @@ mymap.on('locationerror', onLocationError);
 
 function list_station(l){
     $('#nearest_stalls').html(
-        "<p>"+ "<b>List of nearest stations</b>: <br><br>" + 
+        "<p>"+
             l[0].layer._popup._content 
-            + "<br><br>"
+            + "<br><hr></hr>"
             + l[1].layer._popup._content 
-            + "<br><br>"
+            + "<br><hr></hr>"
             + l[2].layer._popup._content 
-            + "<br><br>"
+            + "<br><hr></hr>"
             + l[3].layer._popup._content 
-            + "<br><br>"
+            + "<br><hr></hr>"
             + l[4].layer._popup._content +
         "</p>" 
     )
