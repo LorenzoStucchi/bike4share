@@ -20,6 +20,7 @@ import geojson
 import datetime
 
 
+
 # Access to database
 myFile = open('dbConfig.txt')
 connStr = myFile.readline()
@@ -366,21 +367,7 @@ def callback6(attr, old, new):
 
 p6_widget.on_change('value', callback6)
 
-#Create the plot layout 
-g2= gridplot([p2_widget, p2], ncols=2,  plot_height=400,toolbar_location="right")
-g3= gridplot([p3_widget, p3], ncols=2, plot_height=400,toolbar_location="right")
-g2_panel = Panel(child=g2, title='Day median availability')
-g3_panel = Panel(child=g3, title='Month median availability')
-g4= gridplot([p4_widget, p4], ncols=2, plot_height=400,toolbar_location="right")
-g5= gridplot([p5_widget, p5], ncols=2,  plot_height=400,toolbar_location="right")
-g4_panel = Panel(child=g4, title='Day tot availability')
-g5_panel = Panel(child=g5, title='Month tot availability')
-g6= gridplot([p6_widget, p6], ncols=2, plot_height=400,toolbar_location="right")
-g6_panel = Panel(child=g6, title='Availability weekend')
-# Assign the panels to Tabs
 
-#tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel])
-         
 '''MAP PLOT'''
 
 #Importing data
@@ -411,8 +398,8 @@ TOOLTIPS2=[
 #Create the Map plot
 p1 = figure(x_range=(1020414, 1024954), y_range=(5692309, 5698497),
            x_axis_type="mercator", y_axis_type="mercator", tooltips=TOOLTIPS2,
-           title="Move over the map", height=400)
-p1.title.text_font_size = "25px"
+           title="Move over the map", height=380)
+#p1.title.text_font_size = "25px"
 p1.title.align = "center"
 p1.title.text_color = "#3498DB"
 p1.title.background_fill_color = "#D1F2EB"
@@ -426,7 +413,7 @@ p1.circle('x', 'y', source=psource, color='blue', radius=40) #size=10
 labels = LabelSet(x='x', y='y', text='ID', text_color='blue',
               x_offset=5, y_offset=5, source=psource,render_mode='canvas')
 p1.add_layout(labels)
-g1_panel = Panel(child=p1, title='Map')
+#g1_panel = Panel(child=p1, title='Map')
 
 '''REAL TIME PLOTS'''
 #Stations bikes availability during previous week
@@ -473,8 +460,6 @@ def callback7(attr, old, new):
     p6.line('x', 'y', source = data_7, color = 'green',line_width=2)
 
 p7_widget.on_change('value', callback7)
-g7= gridplot([p7_widget, p7], ncols=2, plot_height=400,toolbar_location="right")
-g7_panel = Panel(child=g7, title='Real time data previous week')
 
 #Stations bikes availability during previous month
 date_8= list(previous_month.index)
@@ -521,11 +506,31 @@ def callback8(attr, old, new):
 
 
 p8_widget.on_change('value', callback8)
+#Create the plot layout 
+g2= gridplot([p2_widget,p2], ncols=2,  plot_height=400,toolbar_location="right")
+g_2= gridplot([g2,p1], ncols=2,toolbar_location="right")
+g3= gridplot([p3_widget, p3], ncols=2, plot_height=400,toolbar_location="right")
+g_3= gridplot([g3,p1], ncols=2,toolbar_location="right")
+g2_panel = Panel(child=g_2, title='Day median availability')
+g3_panel = Panel(child=g_3, title='Month median availability')
+g4= gridplot([p4_widget, p4], ncols=2, plot_height=400,toolbar_location="right")
+g_4= gridplot([g4,p1], ncols=2,toolbar_location="right")
+g5= gridplot([p5_widget, p5], ncols=2,  plot_height=400,toolbar_location="right")
+g_5= gridplot([g5,p1], ncols=2,toolbar_location="right")
+g4_panel = Panel(child=g_4, title='Day tot availability')
+g5_panel = Panel(child=g_5, title='Month tot availability')
+g6= gridplot([p6_widget, p6], ncols=2, plot_height=400,toolbar_location="right")
+g_6= gridplot([g6,p1], ncols=2,toolbar_location="right")
+g6_panel = Panel(child=g_6, title='Availability weekend')
+g7= gridplot([p7_widget, p7], ncols=2, plot_height=400,toolbar_location="right")
+g_7= gridplot([g7,p1], ncols=2,toolbar_location="right")
+g7_panel = Panel(child=g_7, title='Real time data previous week')
 g8= gridplot([p8_widget, p8], ncols=2, plot_height=400,toolbar_location="right")
-g8_panel = Panel(child=g8, title='Real time data previous month')
+g_8= gridplot([g8,p1], ncols=2,toolbar_location="right")
+g8_panel = Panel(child=g_8, title='Real time data previous month')
 
 
-tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel,g7_panel,g8_panel,g1_panel])		  
+tab = Tabs(tabs=[g2_panel,g3_panel,g4_panel,g5_panel,g6_panel,g7_panel,g8_panel])		  
 layout=(tab)
 #Output the plot
 output_file("templates/stat_bikes.html")
