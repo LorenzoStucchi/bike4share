@@ -9,7 +9,8 @@
 {% block content %}
 
     {% if g.user %}
-    	<div id="premium">
+    <section>
+    	<div class = "content" style= "border-style: solid; border-width: 3px; border-color: #189cdf" id="premium">
 	        <div id="map_premium"></div>
 	        <div id="nearest_stalls"></div>
         </div>
@@ -17,11 +18,18 @@
         <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
         <script src="{{url_for('static', filename = 'leaflet-knn.js')}}" type="text/javascript"></script>
         <script src="{{url_for('static', filename = 'map_premium.js')}}" type="text/javascript"></script>
+        </section>
     {% else %}
-        <div id="map"></div>
+    <section class="column">
+        <div class = "content" style= "border-style: solid; border-width: 3px; border-color: #189cdf;margin-right: 12px;" id="map"></div>
         <script src="{{url_for('static', filename = 'var_stat.geojson')}}" type="text/javascript"></script>
         <script src="{{url_for('static', filename = 'map.js')}}" type="text/javascript"></script>
-        </div>
+        </div><br><br><br><br>
+        </section>
+
+        <div class="columnside" style="border-style: solid; border-width: 3px; border-color: #189cdf; background-image: linear-gradient(#eee,#fff); max-height: 100%; margin-left: 0;"><a>What is bike4share<br><br>bike for share is a platform....</a><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div><br><br><br>
+
 
 
     {% endif %}

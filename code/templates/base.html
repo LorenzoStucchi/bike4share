@@ -2,8 +2,10 @@
 <title></title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="{{ url_for('static', filename='B4S_favicon.png') }}" type="image/png">  
+  
+</section style="margin-left: auto; margin-right: auto;"><br><br></section>
 <nav class="topnav">
-  <h1><a href="/index">bike4share</a></h1>
+  <h1><a href="/index"><img style="position: absolute; width:11%; height: 17%; margin-top: -50px; margin-bottom: -20px;" class="resize" src="/static/logo.png" /></a></h1>
   
     {% if g.user %}
       Welcome {{ g.user[1] }}!
@@ -19,8 +21,8 @@
       <li><a href="/login">Log In</a>
     {% endif %}
   </ul>
-</nav>
-<body style="background-image:url(/static/back.jpg);background-size: cover">
+</nav><br>
+<body style="background-image:url(/static/orange.jpg);background-size: cover">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
       crossorigin=""/>
@@ -32,8 +34,7 @@
         crossorigin=""></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-      <hr>
-<section class = "content">
+<section>
   <header>
     {% block header %}{% endblock %}
   </header>
