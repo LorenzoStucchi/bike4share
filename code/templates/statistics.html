@@ -7,7 +7,9 @@
 
 {% block content %}
 	{% if g.user[4] == 't' %}
+	<section style="background-color: #293133; overflow:auto;">
 	    {{ bokS|indent(4)|safe }}
+	</section>
 	{% else %}
 		{% if g.user[4] == 'u' %}
 		    <p>
