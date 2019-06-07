@@ -430,7 +430,7 @@ TOOLTIPS2=[
 #Create the Map plot
 p1 = figure(x_range=(1020414, 1024954), y_range=(5692309, 5698497),
            x_axis_type="mercator", y_axis_type="mercator", tooltips=TOOLTIPS2,
-           title="Move over the map", height=380)
+           title="Move over the map", height=400)
 #p1.title.text_font_size = "25px"
 p1.title.align = "center"
 p1.title.text_color = "#3498DB"
