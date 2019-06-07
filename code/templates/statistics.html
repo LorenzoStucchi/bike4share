@@ -2,14 +2,14 @@
 
 
 {% block header %}
-<h1>{% block title %}Statistics{% endblock %}</h1>
+<h1 style="text-align: center">{% block title %}Statistics{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 	{% if g.user[4] == 't' %}
-	<section style="background-color: #293133; overflow:auto;">
+	<section style="background-color: #eee; overflow:auto;">
 	    {{ bokS|indent(4)|safe }}
-	</section>
+	</section><br>
 	{% else %}
 		{% if g.user[4] == 'u' %}
 		    <p>
