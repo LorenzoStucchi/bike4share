@@ -430,7 +430,7 @@ TOOLTIPS2=[
 #Create the Map plot
 p1 = figure(x_range=(1020414, 1024954), y_range=(5692309, 5698497),
            x_axis_type="mercator", y_axis_type="mercator", tooltips=TOOLTIPS2,
-           title="Move over the map", height=400)
+           title="Move over the map", height=400, width=400)
 #p1.title.text_font_size = "25px"
 p1.title.align = "center"
 p1.title.text_color = "#3498DB"
@@ -539,7 +539,7 @@ def callback8(attr, old, new):
 
 p8_widget.on_change('value', callback8)
 #Create the plot layout 
-g2= gridplot([p2_widget,p2], ncols=2,  plot_height=400,toolbar_location="right")
+g2= gridplot([p2_widget,p2], ncols=2, plot_height=400,toolbar_location="right")
 g_2= gridplot([g2,p1], ncols=2,toolbar_location="right")
 g3= gridplot([p3_widget, p3], ncols=2, plot_height=400,toolbar_location="right")
 g_3= gridplot([g3,p1], ncols=2,toolbar_location="right")
