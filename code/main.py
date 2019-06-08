@@ -235,6 +235,7 @@ def forgotpassword():
             rec_password=key_generator(10)
             conn = get_dbConn()
             cur = conn.cursor()
+            cur.execute('DELETE from password_recovery WHERE user_name = %s', (username,))
             cur.execute('INSERT INTO password_recovery (psw_recovery, user_name) VALUES (%s, %s)', (rec_password, username))
             cur.close()
             conn.commit()        
