@@ -174,7 +174,8 @@ p2.yaxis.major_label_orientation = "vertical"
 p2.title.align = "center"
 p2.title.text_color = "#3498DB"
 p2.title.background_fill_color = "#D1F2EB"
-
+p2.border_fill_color = "#EEEEEE"
+p2.min_border_left = 40
         
 #Create Select Widget that allows us to create a drop down menu
 p2_widget = Select(options = options_1, value = options_1[0], width=150,
@@ -229,6 +230,8 @@ p3.yaxis.major_label_orientation = "vertical"
 p3.title.align = "center"
 p3.title.text_color = "#3498DB"
 p3.title.background_fill_color = "#D1F2EB"      
+p3.border_fill_color = "#EEEEEE"
+p3.min_border_left = 40
 
 p3_widget = Select(options= options_1, value= options_1[0], width=150,
                 title = 'Select a station',background='#D1F2EB')
@@ -278,7 +281,8 @@ p4.yaxis.major_label_orientation = "vertical"
 p4.title.align = "center"
 p4.title.text_color = "#E70F0F"
 p4.title.background_fill_color = "#FADBD8"
-
+p4.border_fill_color = "#EEEEEE"
+p4.min_border_left = 40
         
 #Create Select Widget that allows us to create a drop down menu
 p4_widget = Select(options = options_1, value = options_1[0], width=150,
@@ -331,6 +335,8 @@ p5.yaxis.major_label_orientation = "vertical"
 p5.title.align = "center"
 p5.title.text_color = "#E70F0F"
 p5.title.background_fill_color = "#FADBD8"    
+p5.border_fill_color = "#EEEEEE"
+p5.min_border_left = 40
 
 p5_widget = Select(options= options_1, value= options_1[0], width=150,
                 title = 'Select a station',background='#FADBD8')
@@ -358,8 +364,9 @@ data_6 = ColumnDataSource({ 'x': day2, 'y':  list(bikes_weekend['1'])})
 TOOLTIPS = [
     ("No.bikes", "@y")
 ]
-p6 = figure(title="Bikes availability trend weekend", tooltips=TOOLTIPS)
-p6.line('x', 'y', source = data_6, color = 'orange',line_width=2)
+p6 = figure(title="Bikes availability trend during weekend", tooltips=TOOLTIPS)
+p6.vbar(x='x', top='y', source = data_6, width=0.9, line_color='white', color='orange')
+p6.line('x', 'y', source = data_6, color = '#FF9B00',line_width=2)
 label_dict_2 = {4:'Friday',5:'Saturday',6:'Sunday'}
 p6.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
@@ -378,7 +385,9 @@ p6.yaxis.major_label_orientation = "vertical"
 p6.title.align = "center"
 p6.title.text_color = "#FD6400"
 p6.title.background_fill_color = "#FEB280"    
-
+p6.border_fill_color = "#EEEEEE"
+p6.min_border_left = 40
+p6.xaxis.ticker = [4, 5, 6]
 p6_widget = Select(options= options_1, value= options_1[0], width=150,
                 title = 'Select a station',background= '#FDEBD0')
 
@@ -390,12 +399,13 @@ def callback6(attr, old, new):
     else:
         num = column6plot[-1:]
     data_6.data = {'x' : day2, 'y': list(bikes_weekend[num])}
-    p6.line('x', 'y', source = data_6, color = 'orange',line_width=2)
+    p6.vbar(x='x', top='y', source = data_6, width=0.9, line_color='white', color='orange')
+    p6.line('x', 'y', source = data_6, color = '#FF9B00',line_width=2)
     label_dict_2 = {4:'Friday',5:'Saturday',6:'Sunday'}
     p6.xaxis.formatter = FuncTickFormatter(code="""
-    var labels = %s;
-    return labels[tick];
-""" % label_dict_2)
+        var labels = %s;
+        return labels[tick];
+    """ % label_dict_2)
 
 p6_widget.on_change('value', callback6)
 
@@ -435,6 +445,9 @@ p1 = figure(x_range=(1020414, 1024954), y_range=(5692309, 5698497),
 p1.title.align = "center"
 p1.title.text_color = "#3498DB"
 p1.title.background_fill_color = "#D1F2EB"
+p1.border_fill_color = "#EEEEEE"
+p1.min_border_left = 40
+
 #Add basemap tile
 p1.add_tile(get_provider(Vendors.CARTODBPOSITRON)) #bokeh version 1.1
 #p1.add_tile(CARTODBPOSITRON) #bokeh version 1.0
@@ -477,6 +490,8 @@ p7.yaxis.major_label_orientation = "vertical"
 p7.title.align = "center"
 p7.title.text_color = "#17AA02"
 p7.title.background_fill_color = "#A8FF33"    
+p7.border_fill_color = "#EEEEEE"
+p7.min_border_left = 40
 
 p7_widget = Select(options= options_1, value= options_1[0], width=150,
                 title = 'Select a station',background= '#ADFCA2')
@@ -522,6 +537,8 @@ p8.yaxis.major_label_orientation = "vertical"
 p8.title.align = "center"
 p8.title.text_color = "#17AA02"
 p8.title.background_fill_color = "#A8FF33"    
+p8.border_fill_color = "#EEEEEE"
+p8.min_border_left = 40
 
 p8_widget = Select(options= options_1, value= options_1[0], width=150,
                 title = 'Select a station',background= '#ADFCA2')
@@ -553,7 +570,7 @@ g4_panel = Panel(child=g_4, title='Percentage per day')
 g5_panel = Panel(child=g_5, title='Percentage per month')
 g6= gridplot([p6_widget, p6], ncols=2, plot_height=400,toolbar_location="right")
 g_6= gridplot([g6,p1], ncols=2,toolbar_location="right")
-g6_panel = Panel(child=g_6, title='Availability weekend')
+g6_panel = Panel(child=g_6, title='Weekend availability')
 g7= gridplot([p7_widget, p7], ncols=2, plot_height=400,toolbar_location="right")
 g_7= gridplot([g7,p1], ncols=2,toolbar_location="right")
 g7_panel = Panel(child=g_7, title='Real time data previous week')
