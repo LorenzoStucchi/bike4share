@@ -53,10 +53,12 @@ The technicians are requested to complete the registration and log-in to have ac
                                \item Showing the position of all the bike stalls
                                \item ID Number of bikes stalls per each selected station
                                \item Number of the stalls for each selected station
+                               \item Manually typing of the address or select the position on the map  
                                \end{itemize}
         \\
             \hline
             PREMIUM FUNCTION &  \begin{itemize}
+                                \item all the previous basic function    are included
                                 \item Display the position of the user on the map
                                 \item Help the users to visualise the nearest station with respect to their position
                                 \item Showing the list of all the available  stations nearby
@@ -65,6 +67,7 @@ The technicians are requested to complete the registration and log-in to have ac
              \\
             \hline
             TECHNICIAN AREA &  \begin{itemize}
+                               \item All the previous premium function    are included
                                \item Plotting of the stations median bikes availability per day of the week
                                \item Plotting of the stations median bikes availability per day of the month
                                \item Plotting of the percentage of bikes availability per day
@@ -123,7 +126,7 @@ This document is organized in different sections like described in Table 3.
 \section{Design Overview}
 This section briefly introduce the system context and design, and discuss the background to the project
 \subsection{Approach}
-The “bike4share” Web Application is created and extended in multiple phases over the course of the project (Table 4).
+The “bike4share” web application is created and extended in multiple phases over the course of the project (Table 4).
 \begin{table} [H]
     \begin{center}
         \begin{tabular}{|l|p{0.6\textwidth}|}
@@ -148,7 +151,7 @@ The “bike4share” Web Application is created and extended in multiple phases 
 
 \subsection{Background Information}
 
-The  customer has invested in sustainable mobility by installing a number of bike stalling stations around the City. The implemented bike sharing system must be monitored with the “bike4share” WebApp for assessing the bikes flow both in space and time and, eventually, for designing future system improvement actions. 
+The  customer has invested in sustainable mobility by installing a number of bike stalling stations around the City. The implemented bike sharing system must be monitored with the “bike4share” web application for assessing the bikes flow both in space and time and, eventually, for designing future system improvement actions. 
 Also, the customer has the need to inform in real time bike sharing users about the status of each stations.
 
 \subsection{Constraints}
@@ -188,10 +191,10 @@ There are different kind of users. Every user can interact with different inform
             REGISTERED USER &   A user that is registered yet and that wants to access the “b4s” web application services in order to use the premium functions available  on  the application. It  could  be  a  person  that  uses this service frequently. \\ 
             \hline
             NOT REGISTERED USER &  
-            A user  that  isn’t registered  yet  and  that  wants to ccess  the  “b4s”  web application  services  in  order  to  use the  basic functions available on the application, it could be a person that doesn’t use this service frequently or a new user that wants to start an approach to this service and try it for the first time  \\
+            A user  that  isn’t registered  yet  and  that  wants to access  the  “b4s”  web application  services  in  order  to  use the  basic functions available on the application, it could be a person that doesn’t use this service frequently or a new user that wants to start an approach to this service and try it for the first time  \\
             \hline
             TECHNICIAN &  
-            A person who is authenticated thanks to specific credential given by the master of the service and who has been granted supervising permissions.   He/she  is  allowed  to  view,  analyze,  access  statistics  and aggregated information about the “b4s” web application services.
+            A person who is authenticated thanks to specific credential given by the master of the service and who has been granted supervising permissions.   He/she  is  allowed  to  view,  analyse,  access  statistics  and aggregated information about the “b4s” web application services.
             \\
             \hline
         \end{tabular}
@@ -220,7 +223,7 @@ It is possible to identify the following problems with respect to the type of ev
     \hline
       LOG-IN PHASE &        \begin{itemize}
                             \item Forgot password:the user can follow the recovery password procedure
-                            \item Localization doesn’t work: so the system provides to the logged user the possibility of  manually inserting the needed address and find the position or adding a point in his position
+                            \item Localisation doesn’t work: so the system provides to the logged user the possibility of  manually inserting the needed address and find the position or adding a point in his position
                             \item Maps providers crash
                             \item Server doesn’t work
                             \end{itemize}
@@ -365,15 +368,15 @@ The structure of the software is based on the following python script and reusab
      \end{itemize}
      \\
     \hline
-    downloadStation.py & It allows to download the data about the station from the DB and to save it to a GeoJSON file and trasform it into a javascript variable. 
+    downloadStation.py & It allows to download the data about the station from the DB and to save it to a GeoJSON file and transform it into a javascript variable. 
       \\
     \hline
 \caption{Software structure overview } \\
 \end{longtable}
       
 \subsection{Communications Architecture}
-The Communication diagram, fig \ref{fig:createSchema}, is a diagram that shows the interactions between elements at run-time. They  are used to visualize inter-object relationships.
-In the schema in fig. \ref{fig:createSchema} is possible to notice how the createSchema python code is linked with the DB and how it can interact in the creation, modification and update of the dataframes.
+The Communication diagram, fig \ref{fig:createSchema}, is a diagram that shows the interactions between elements at run-time. They  are used to visualise inter-object relationships.
+In the schema in fig. \ref{fig:createSchema} is possible to notice how the createSchema python code is linked with the DB and how it can interact in the creation, modification and update of the dataframe.
 
 \begin{figure}[H]
     \centering
@@ -436,6 +439,8 @@ The table 11 will show the main attributes that describe the DB tables.
   & regarding & BIKE\_SH & text & - \\
   & stations & INDIRIZZO & text & - \\
   & & STALLI & int & - \\
+  \hline
+  \hline
   & & LOCALIZ & text & - \\
   & & LATITUDINE & double & - \\
   & & LONGITUDINE & double & - \\
@@ -473,7 +478,7 @@ This module is used to download the data of the stations directly from the serve
 It implies the creation of a geojson file with the information about the position and the number of stalls for every station.
 
 \subsubsection{Module 3: realtime\_data}
-This module is used to download the data of the availabilty of bikes for each station directly from the server, it is automated and it’s imported by the main module.
+This module is used to download the data of the availability of bikes for each station directly from the server, it is automated and it’s imported by the main module.
 
 \paragraph{realtime\_data: Processing}
 It implies the creation of a geojson file with the information about the number of free stalls and bike available for every station.
@@ -487,10 +492,12 @@ The main structures used to store data are data frames and lists.
 
 \subsubsection{Module 5: statistics}
 The aim of  this module is to create different statistics on the base of the data retrieved by the DB, from tables ‘bike\_stalls’ and ‘stations’.
+
 \paragraph{statistics: Processing}
-The first operation that is made in this module is the connection to the DB in order to store the tables, above mentioned, of the data respectively in two different data frames. In this way is possible to extract the information needed to compute statistics, e.g. day and month. Functionalities to retrieve real time data have been implemented too. The data can be stored in data frames using the function df\_bike. groupby on the base of the different criteria as the median and the total availability of bikes. Using Bokeh functions it is possible to plot these statistics and to design the relative widgets. 
+The first operation that is made in this module is the connection to the DB in order to store the tables, above mentioned, of the data respectively in two different data frames. In this way is possible to extract the information needed to compute statistics, e.g. day and month. Functionalities to retrieve real time data have been implemented too. The data can be stored in the data frame and group by on the base of the different criteria as the median and the total availability of bikes. Using Bokeh functions it is possible to plot these statistics and to design the relative widgets. 
 \paragraph{statistics: Local data structures}
 The main structures used to store data are data frames and lists.
+
 \section{Human-Machine Interface}
 The user interface is easy and intuitive, fig \ref{fig:usageb4s}. When the webpage is opened, a map appears on the screen. The map shows the bike stations (as markers) in terms of position in space, with the possibility to interact with it; clicking on them, the user can immediately know what is the address and the capacity (total number of stalls)
 \\
@@ -587,7 +594,7 @@ The "b4s" web application provides several outputs, based on the type of user wh
             \item Map visualisation
             \item Position of the stations
             \item Manual inserting of the user's position
-            \item Automatic localization
+            \item Automatic localisation
             \item List of the nearest stalls
             \item Total number of the stalls
             \item Number of free bikes available
@@ -604,7 +611,7 @@ The "b4s" web application provides several outputs, based on the type of user wh
 In this section is possible to find a diagram, fig \ref{fig:navigation}, of the navigation hierarchy where is shown how a user can move through the interfaces.\\
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.68\linewidth]{image/USERFLOW2.png}
+    \includegraphics[width=0.68\linewidth]{image/USERFLOW.png}
     \caption{Diagram of the navigation hierarchy}
     \label{fig:navigation}
 \end{figure}
