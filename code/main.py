@@ -1,7 +1,6 @@
 from flask import (
     Flask, render_template, request, redirect, flash, url_for, session, g
 )
-# from werkzeug.exceptions import abort
 from werkzeug.security import check_password_hash, generate_password_hash
 from bokeh.embed import server_document
 import subprocess
@@ -17,7 +16,7 @@ from func import ( mail_sender , key_generator)
 
 # Create the application instance
 app = Flask(__name__, template_folder="templates")
-# Set the secret key to some random bytes. Keep this really secret!
+# Set the secret key to some random bytes.
 app.secret_key = os.urandom(24) 
 
 # function
@@ -53,8 +52,7 @@ def load_logged_in_user():
     else: 
         return True
     
-downloadStation
-#realtime_data
+#downloadStation
 
 # Create a URL route in our application for "/"
 @app.route('/')
@@ -65,6 +63,7 @@ def index():
     cur.close()
     conn.commit()
     load_logged_in_user()
+    realtime_data
 
     return render_template('index.html')
         
