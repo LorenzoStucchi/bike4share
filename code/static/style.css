@@ -58,6 +58,12 @@ input[type=submit] { align-self: start; min-width: 10em; }
   height: 100%;
   
 }
+.column2 {
+  float: left;
+  width: 55%;
+  height: 100%;
+  
+}
 .columnsep {
   float: left;
   width: 10%;
@@ -70,7 +76,14 @@ input[type=submit] { align-self: start; min-width: 10em; }
 
   
 }
+}
+.columnside2 {
+  float: right;
+  width: 45%;
+  height: 100%;
 
+  
+}
 /* Clear floats after the columns */
 .row:after {
   content: "";
@@ -82,5 +95,5 @@ input[type=submit] { align-self: start; min-width: 10em; }
 
 #map { height: 500px; }
 #premium {width: 100%; overflow: hidden}
-#map_premium { height: 500px; width: 650px; float: left; }
+#map_premium { height: 500px;width: 100% float: left; }
 #nearest_stalls {height: 500px; width: 280px; margin-left: 600px;}

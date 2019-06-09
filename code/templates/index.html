@@ -9,9 +9,12 @@
 {% block content %}
 
     {% if g.user %}
-    <section>
+    <section class="column2">
     	<div class = "content" id="premium">
 	        <div style= "border-style: solid; border-width: 1px; border-color: #189cdf;margin-right: 12px;" id="map_premium"></div>
+        </section>
+        
+        <section class="columnside2">
             <div style= "border-style: solid; border-bottom: 0px; border-width: 1px; border-color: #189cdf; margin-left:0; margin-right:4px; width: 40%; height: 40px; overflow:auto; background-image: linear-gradient(#eee,#fff); padding: 10px;"><b>List of nearest stations : <br></b></div>
 	        <div style= "border-style: solid; border-width: 1px; border-color: #189cdf; margin-left:0; margin-right:4px; width: 40%; height: 460px; overflow:auto; background-image: linear-gradient(#eee,#fff); padding: 10px;" id="nearest_stalls"></div>
         </div>
