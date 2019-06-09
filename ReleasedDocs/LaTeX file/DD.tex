@@ -41,10 +41,10 @@ It is mainly  intended to assist the customer that has invested in sustainable m
 \subsection{Scope}
 The final output of the “ bike4share” project will be a client–server computer program which the client, including the user interface and client-side logic, runs in a web browser.
 The system will allow  the user to interact with a web page in which different functions are offered to different type of users (Table 2).
-The basic functions allow the not registered users to perform some elementary activities.  
-The premium functions are in addiction of the basic function and they are  accessible for the users after the registration, once the log-in phase is successfully completed, the registered user can access to different functionalities that can help the usability of the app.
+The Basic Functions allow the not registered users to perform some elementary activities.  
+The Premium Functions are in addiction of the Basic Function and they are  accessible for the users after the registration, once the log-in phase is successfully completed, the registered user can access to different functionalities that can help the usability of the app.
 A specific section of the application is devoted to the technician’s use. 
-The technicians are requested to complete the registration and log-in to have access to their specific section. Here it's possible, in addition to all the other functionalities, to perform some analysis and graphical statistics with specific tools.
+The technicians are requested to complete the registration (with a specific secret code given by the master of the service) and log-in to have access to their specific section. Here it's possible, in addition to all the other functionalities, to perform some analysis and graphical statistics with specific tools.
 \begin{table} [H]
     \begin{center}
         \begin{tabular}{|l|p{0.6\textwidth}|}
@@ -95,8 +95,8 @@ b4s: bike4share\\
 HW: hardware\\
 SW: software\\
 DD: Design Document
-\subsection{Document Organization}
-This document is organized in different sections like described in Table 3.
+\subsection{Document Organisation}
+This document is organised in different sections like described in Table 3.
 
 \begin{table} [H]
     \begin{center}
@@ -120,7 +120,7 @@ This document is organized in different sections like described in Table 3.
             \hline
         \end{tabular}
     \end{center}
-\caption{Document organization}
+\caption{Document organisation}
 \end{table}
 \newpage
 \section{Design Overview}
@@ -146,7 +146,7 @@ The “bike4share” web application is created and extended in multiple phases 
             \hline
         \end{tabular}
     \end{center}
-\caption{Phases of the project's developement}
+\caption{Phases of the project's development}
 \end{table}
 
 \subsection{Background Information}
@@ -267,7 +267,7 @@ It is important to consider the fact that in the programming phase the architect
 \end{figure}
 
 \subsection{Software Architecture}
-The software architecture is mainly based on the implementation of the statistics thanks to Bokeh and the visualization of the obtained results through flask.
+The software architecture is mainly based on the implementation of the statistics thanks to Bokeh and the visualisation of the obtained results through flask.
 The programming language is Python and in particular the libraries and the tools that are used are:
 
 \begin{longtable}[H]{|p{0.2\textwidth}|c|p{0.6\textwidth}|}
@@ -292,7 +292,7 @@ The programming language is Python and in particular the libraries and the tools
     GeoJSON & 2.4.1 & Is a format for encoding a variety of geographic data structures that supports the following geometry types: Point, LineString, Polygon, MultiPoint, MultiLineString, and MultiPolygon. Geometric objects with additional properties are Feature objects. Sets of features are contained by FeatureCollection objects
        \\
     \hline
-    Bokeh & 1.1.0 &  It is an interactive visualization library its goal is to provide elegant, concise construction of versatile graphics, and to extend this capability with high-performance interactivity over very large or streaming datasets
+    Bokeh & 1.1.0 &  It is an interactive visualisation library its goal is to provide elegant, concise construction of versatile graphics, and to extend this capability with high-performance interactivity over very large or streaming datasets
         \\
     \hline
     Flask & 1.0.2 & It is a micro web framework written in Python that supports extensions that can add application features as if they were implemented in Flask itself. Extensions exist for object-relational mappers, form validation, upload handling, various open authentication technologies and several common framework related tools \\
@@ -326,7 +326,7 @@ The structure of the software is based on the following python script and reusab
     NAME      &         DESCRIPTION AND FUNCTIONS
       \\
       \hline
-    createSchema.py &  It allows the creation of the different table used by the  “bike4share” WebApp. Thanks to the SQL query and the pgAdmin DBs connection it is possible to access, create, updated, extract data and fill the different DBs which interact with the user side in order to guarantee the consistency with the latest version of the data
+    createSchema.py &  It allows the creation of the different table used by the  “bike4share” web application. Thanks to the SQL query and the pgAdmin DBs connection it is possible to access, create, updated, extract data and fill the different DBs which interact with the user side in order to guarantee the consistency with the latest version of the data
       \\
     \hline 
     realtime\_data.py & It allows the data analysis in real-time thanks to the connection with the DBs
@@ -356,7 +356,7 @@ The structure of the software is based on the following python script and reusab
          \item get\_dbConn: it allows the connection with the  DBs
          \item close\_dbConn: it allows the disconnection from the  DBs
          \item load\_logged\_in\_user: it allows to check if the user is inserted yet in the user’s DB and make the consequent operations
-         \item index: it allows the map visualization
+         \item index: it allows the map visualisation
          \item register: it allows the registration of the user
          \item log\_in: it allows the log-in of the pre-registered users
          \item forgotpassword: it allows to recovery the forgotten password both for the users than the technician
@@ -384,7 +384,7 @@ In the schema in fig. \ref{fig:createSchema} is possible to notice how the creat
     \caption{Communication diagram related to the createSchema module}
     \label{fig:createSchema}
 \end{figure}
-In the figure \ref{fig:webpage} is possible to see how the different modules of the “bike4share” application are linked, what kind of function are used and how they interact between themselves.
+In the figure \ref{fig:webpage} is possible to see how the different modules of the “b4s” application are linked, what kind of function are used and how they interact between themselves.
 
 \begin{figure}[H]
     \centering
@@ -435,7 +435,7 @@ The table 11 will show the main attributes that describe the DB tables.
  KEY\_LIST &  Random  & Id\_key &int(PK)& - \\ 
  & technician passwords &  secret\_key & varchar & 35 \\
  \hline
- STATIONS  &   Informations   & ID &int & - \\
+ STATIONS  &   Information   & ID &int & - \\
   & regarding & BIKE\_SH & text & - \\
   & stations & INDIRIZZO & text & - \\
   & & STALLI & int & - \\
@@ -445,12 +445,12 @@ The table 11 will show the main attributes that describe the DB tables.
   & & LATITUDINE & double & - \\
   & & LONGITUDINE & double & - \\
  \hline
- USER\_BIKE &  Informations & user\_id & int(PK)& -\\
+ USER\_BIKE &  Information & user\_id & int(PK)& -\\
  & regarding & user\_name & varchar & 255 \\
  & users & user\_password & varchar & 255 \\
  & & user\_type & varchar & 255\\
  \hline 
- PASSWORD\_ &  Informations  & id\_psw & int(PK)& -\\
+ PASSWORD\_ &  Information  & id\_psw & int(PK)& -\\
  RECOVERY & regarding & psw\_recovery & varchar & 11 \\
  & users who have forgotten their password & user\_name & varchar & 255 \\
  \hline
