@@ -52,8 +52,6 @@ def load_logged_in_user():
     else: 
         return True
     
-#downloadStation
-
 # Create a URL route in our application for "/"
 @app.route('/')
 @app.route('/index')
