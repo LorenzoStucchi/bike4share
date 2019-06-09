@@ -30,7 +30,7 @@ RASD: requirement analysis and specification document
 \subsection{Reference documents}
 the following documents are taken as reference for the developing of the b4s web application:
 \begin{itemize}
-    \item SE4G Lab assignment:GreatBikes given by Prof.ssa Elisabetta Di Nitto, PhD Eng. Daniele Oxoli
+    \item SE4G Lab assignment: GreatBikes given by Prof.ssa Elisabetta Di Nitto, PhD Eng. Daniele Oxoli
     \item Flask Web Developement -developing web application with Python- written by Miguel Grinberg
     \item Hands-On Data Visualization with Bokeh written by Kevin Jolly 
 \end{itemize}
@@ -47,19 +47,19 @@ Data are retrieved as input from the Databases.
 Software is retrieved as output of Map and statistics visualisation.\\
 User level makes possible to view the map and to obtain some information (from the user point of view) and the technician can perform API request to analyse data and statistics.\\ Both the actors can perform their purposes accessing the page through the browser.\\
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{image/BIKE4SHARE_SCHEMA_FINAL.png}
     \caption{Overall view of "bike4share" system}
     \label{fig:schema}
 \end{figure}
 The Venn diagram in figure \ref{fig:venn} shows a representation of the phenomena, world, shared and machine,  concerning the software.\\
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{image/venn.png}
     \caption{Venn diagram of the phenomena}
     \label{fig:venn}
-\end{figure}\\\\
+\end{figure}
 
 \subsection{Product functions}
 "b4s” provides different functions to different type of users.\\
@@ -134,7 +134,7 @@ At the beginning every users will see the same homepage as shown in Figure \ref{
 3.1.1.1 USE CASE:Log-In
 
 In this interface the user is registered yet so it's sufficient to follow the log in procedure and compile the requested fields Figure \ref{fig:log-in 2}
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.35\linewidth]{image/log_in.PNG}
     \caption{"bike4share" common users interface}
@@ -231,26 +231,29 @@ As new user Luca has to sign in by compiling the form with his correct format e-
 If the user name that Luca has inserted is chosen yet a message is shown and he has to change the previous chosen name, otherwise the registration is successfully completed.
 Now Luca can access to the the “bike4share” WebApp PREMIUM FUNCTION and check the stalls’ list near the Cadorna railway station.
 
-\subsubsection{\textbf{USE CASE}: Forgot Password}
+\subsubsection{\textbf{USE CASE}: Password Recovery}
 \begin{enumerate}
 \item Participating actors: 
 \begin{itemize}
     \item user
     \item WebApp
+    \item DB
 \end{itemize}
 \item Entry Condition: 
 \begin{itemize}
-    \item user forgot the password and wants to restore it
+    \item user forgot the password and wants to set a new one
 \end{itemize}
 \item Flow of events: 
 \begin{itemize}
     \item users have to put the username 
     \item users have to put the e-mail associated to the account 
-    \item the system sends back the old password using the user e-mail
+    \item users have to start the Password Recovery procedure
+    \item the system sends an e-mail to the user with the random code.
+    \item the random code, username and new password are inserted in the specific form in order to perform the Set New Password procedure
 \end{itemize}
 \item Exit Condition: 
 \begin{itemize}
-    \item user receive by mail a random code that can be used to set the new password
+    \item the new password is set
 \end{itemize}
 \item Exceptions
 \begin{itemize}
@@ -426,7 +429,5 @@ Security is not the main issue of the application, but it’s essential to guara
 Since the architecture can support an easy evolution of the software and the adding of new features and options (taking in consideration the users’ feedback), the development requires the use of an object oriented language to make use of classes and therefore to create a more readable code.
 \subsubsection{Portability}
 The system is developed to reach any browser. So it must be available on several OS and on any browser (e.g. Google Chrome, Mozilla Firefox).
-
-% \section{Appendices}
 
 \end{document}
