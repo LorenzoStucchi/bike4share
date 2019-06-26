@@ -20,7 +20,7 @@ For running the *bike4share* is needed to have the following packages, tested wi
 * Werkzeug 0.14.1
 * Psycopg2 2.8.1
 
-To start the execution of the code is needed to have installed a server with PostgreSQL, and create a database called bike4share.
+To start the execution of the code is needed to have installed a server with PostgreSQL, and create a database called *bike4share*.
 
 ### Installing
 
@@ -30,16 +30,22 @@ Select a folder and download the code and the documentation
 git clone https://github.com/LorenzoStucchi/bike4share.git
 ```
 
+Move into the folder code, into the terminal with the following code
+
+```
+cd code
+```
+
 Check into *code* the file *dbConfig.txt* and set the database name, the user and the password as in the example:
 
 ```
 dbname=bike4share user=postgres password=postgres
 ```
 
-Move into the folder code, into the terminal with the following code
+Check also for the *mailConfig.txt* and set your e-mail address and password for the users recovery password procedure, the procedure works for a gmail account:
 
 ```
-cd code
+address=bike4sharepolimi@gmail.com password=bike4share
 ```
 
 Run the file *createSchema.py* for create the database needed with the web application:
@@ -79,3 +85,7 @@ In the folder *RelaesedDocs* there is the documentation describing the code divi
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the LICENSE.md file for details
+
+## Plus
+
+A plus version of the premium map can be found at on [GitHub gist](https://gist.github.com/LorenzoStucchi/81da954bfb08359f07e7f43640f14e3d).

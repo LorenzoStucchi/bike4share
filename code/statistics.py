@@ -210,9 +210,9 @@ TOOLTIPS = [
     ("No.bikes", "@y")
 ]
 p3 = figure(title="Stations median bikes availability per month", tooltips=TOOLTIPS)
-p3.vbar(x='x', top='y', source = data_m, width=0.9, line_color='white')
+p3.vbar(x='x', top='y', source = data_m, width=1, line_color='white')
 p3.line('x', 'y', source = data_m, color = 'blue',line_width=2)
-label_dict_m = {0:'Jan',1:'Jan',2:'Feb',3:'Mar', 4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
+label_dict_m = {0:0, 1:'Jan',2:'Feb',3:'Mar', 4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
 p3.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
     return labels[tick];
@@ -317,7 +317,7 @@ TOOLTIPS = [
 ]
 p5 = figure(title="Percentage of bikes availability per month", tooltips=TOOLTIPS)
 p5.line('x', 'y', source = data_5, color = 'red',line_width=2)
-label_dict_m = {0:'Jan',1:'Jan',2:'Feb',3:'Mar', 4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
+label_dict_m = {0:'Jan',1:'Feb',2:'Mar', 3:'Apr',4:'May',5:'Jun',6:'Jul',7:'Aug',8:'Sep',9:'Oct',10:'Nov',11:'Dec'}
 p5.xaxis.formatter = FuncTickFormatter(code="""
     var labels = %s;
     return labels[tick];
