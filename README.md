@@ -33,7 +33,7 @@ git clone https://github.com/LorenzoStucchi/bike4share.git
 Move into the folder code, into the terminal with the following code
 
 ```
-cd code
+cd bike4share/code
 ```
 
 Check into *code* the file *dbConfig.txt* and set the database name, the user and the password as in the example:
